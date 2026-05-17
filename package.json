@@ -1,0 +1,10 @@
+{
+  "name": "kaveri-replica",
+  "version": "1.0.0",
+  "description": "Static replica of Kaveri University",
+  "main": "index.html",
+  "scripts": {
+    "build": "echo 'No build step'"
+  },
+  "dependencies": {}
+}

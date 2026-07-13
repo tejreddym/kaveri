@@ -565,7 +565,7 @@ document.addEventListener('click', (event) => {
 });
 
 // SEO JS start here
-fetch("https://kaveriuniversity.edu.in/wp-json/wp/v2/pages/23")
+fetch("https://kaveriuniv.online/wp-json/wp/v2/pages/23")
   .then(response => response.json())
   .then(data => console.log(data))
   .catch(error => console.error("Error fetching data:", error));

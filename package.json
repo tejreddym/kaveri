@@ -4,6 +4,7 @@
   "description": "Static replica of Kaveri University",
   "main": "index.html",
   "scripts": {
+    "start": "npx http-server . -p 8080",
     "build": "echo 'No build step'"
   },
   "dependencies": {}

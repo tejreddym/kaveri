@@ -368,6 +368,105 @@ const server = http.createServer(async (req, res) => {
     }
   }
 
+  // 2.5 POST /api/submit-enquiry (SIMPLE LEAD CAPTURE ENQUIRY)
+  if (pathname === '/api/submit-enquiry' && req.method === 'POST') {
+    try {
+      const body = await parseRequestBody(req);
+
+      const fullName = sanitizeInput(body.fullName || body.name);
+      const mobile = sanitizeInput(body.mobile).replace(/\D/g, '');
+      const programme = sanitizeInput(body.programme || body.course) || 'B.Sc. (Hons.) Agriculture';
+      const source = sanitizeInput(body.source) || sanitizeInput(body.utm_source) || 'ChatGPT';
+      const utm_source = sanitizeInput(body.utm_source) || 'chatgpt';
+      const utm_medium = sanitizeInput(body.utm_medium) || 'paid';
+      const utm_campaign = sanitizeInput(body.utm_campaign) || 'agriculture_2026';
+      const landing_page_url = sanitizeInput(body.landing_page_url) || '/school-of-agriculture/';
+
+      // Validation
+      if (!fullName || fullName.length < 2) {
+        return sendJsonResponse(req, res, 400, { success: false, message: 'Please enter your full name.' });
+      }
+
+      if (!mobile || !validateMobile(mobile)) {
+        return sendJsonResponse(req, res, 400, { success: false, message: 'Please enter a valid 10-digit Indian mobile number.' });
+      }
+
+      // Verification check
+      const storedData = otpStore.get(mobile);
+      const isVerified = (storedData && storedData.verified) || (NODE_ENV !== 'production' && body.bypassOtp === true);
+
+      if (!isVerified) {
+        return sendJsonResponse(req, res, 400, {
+          success: false,
+          message: 'Mobile number must be verified via OTP before submitting enquiry.'
+        });
+      }
+
+      // Format date time: DD-MM-YYYY HH:mm
+      const now = new Date();
+      const pad = n => (n < 10 ? '0' + n : n);
+      const dateTimeStr = `${pad(now.getDate())}-${pad(now.getMonth() + 1)}-${now.getFullYear()} ${pad(now.getHours())}:${pad(now.getMinutes())}`;
+
+      const enquiryRecord = {
+        id: `ENQ-2026-${crypto.randomBytes(3).toString('hex').toUpperCase()}`,
+        type: 'ENQUIRY',
+        dateTime: dateTimeStr,
+        fullName,
+        mobile,
+        programme,
+        source,
+        utm_source,
+        utm_medium,
+        utm_campaign,
+        landing_page_url,
+        status: 'New',
+        created_at: now.toISOString()
+      };
+
+      saveLead(enquiryRecord);
+
+      // Async Google Sheets Integration Webhook (Server-side)
+      const sheetsWebhookUrl = process.env.GOOGLE_SHEETS_WEBHOOK_URL || LEAD_WEBHOOK_URL;
+      if (sheetsWebhookUrl) {
+        try {
+          const parsedGUrl = url.parse(sheetsWebhookUrl);
+          const postData = JSON.stringify(enquiryRecord);
+          const reqModule = parsedGUrl.protocol === 'https:' ? https : http;
+          const reqSheet = reqModule.request(sheetsWebhookUrl, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Content-Length': Buffer.byteLength(postData)
+            }
+          });
+          reqSheet.on('error', err => {
+            if (NODE_ENV !== 'production') console.error('Google Sheets Webhook Error:', err.message);
+          });
+          reqSheet.write(postData);
+          reqSheet.end();
+        } catch (e) {
+          if (NODE_ENV !== 'production') console.error('Google Sheets Dispatch Exception:', e.message);
+        }
+      }
+
+      // Cleanup OTP store
+      otpStore.delete(mobile);
+
+      if (NODE_ENV !== 'production') {
+        console.log(`[NEW ENQUIRY CAPTURED] Name: ${fullName}, Mobile: ${mobile}, Prog: ${programme}, Source: ${source}`);
+      }
+
+      return sendJsonResponse(req, res, 200, {
+        success: true,
+        message: 'Thank You! Your enquiry has been received successfully. Our admissions team will contact you shortly with programme and admission details.',
+        enquiryId: enquiryRecord.id,
+        programme: enquiryRecord.programme
+      });
+    } catch (err) {
+      return sendJsonResponse(req, res, 500, { success: false, message: 'Failed to process enquiry. Please try again.' });
+    }
+  }
+
   // 3. POST /api/submit-application
   if (pathname === '/api/submit-application' && req.method === 'POST') {
     try {

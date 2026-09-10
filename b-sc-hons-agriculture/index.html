@@ -1589,9 +1589,9 @@
               <div class="col-md-5">
                 <div class="img-wrapper mb-4 me-md-5 rounded-3">
                   <img
-                    src="/wp-content/uploads/2025/06/kaveri-Gallery-54.webp"
-                    class="img-fluid info-img-bg shadow-sm rounded-3"
-                    alt="Programme Overview B.Sc. Hons Agriculture"
+                    src="/wp-content/themes/kaveriuniversity/assets/img/info-agri-img-01.webp"
+                    class="img-fluid info-img-bg"
+                    alt="..."
                   />
                 </div>
               </div>
@@ -1644,25 +1644,23 @@
                     peaceful global society.
                   </p>
                 </div>
-                <div class="text-start">
-                  <a
-                    href="#"
-                    class="btn-nav nav-link open-form btn-primary btn-wide btn-brand-blue"
-                    style="
-                      background-color: #b72928;
-                      color: #ffffff;
-                      padding: 10px 25px;
-                      border-radius: 5px;
-                      display: inline-block;
-                      text-decoration: none;
-                    "
-                    >Apply Now</a
-                  >
+                <div class="mt-4">
+                  <div id="agri-bsc-enquiry-widget"></div>
                 </div>
               </div>
             </div>
           </div>
         </section>
+
+        <!-- Include Enquiry Script -->
+        <script src="/wp-content/themes/kaveriuniversity/assets/js/agri-enquiry.js"></script>
+        <script>
+          document.addEventListener("DOMContentLoaded", function () {
+            if (window.KaveriEnquiry) {
+              window.KaveriEnquiry.init("agri-bsc-enquiry-widget", { programme: "B.Sc. (Hons.) Agriculture" });
+            }
+          });
+        </script>
 
         <section class="info info-bg-light info-content-section">
           <div class="container">

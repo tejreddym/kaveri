@@ -1513,16 +1513,20 @@
     <section
       class="hero-bg info-overlay d-flex align-items-end"
       style="
-        background: url(/wp-content/themes/kaveriuniversity/assets/img/img-hero-admissions-banner.jpg)
-          bottom center no-repeat;
+        background: url(/wp-content/themes/kaveriuniversity/assets/img/agri-hero-bg.jpg)
+          center center no-repeat;
         background-size: cover;
+        min-height: 380px;
+        padding: 50px 0;
       "
     >
       <div class="container">
-        <div class="row">
+        <div class="row align-items-center">
           <div class="col-md-8">
             <div class="hero-content">
-              <h1 class="hero-title text-white mb-2">School of Agriculture</h1>
+              <span class="badge bg-warning text-dark px-3 py-2 fw-bold text-uppercase mb-2" style="font-size: 0.85rem; letter-spacing: 1px;">Admissions 2026–27 Open</span>
+              <h1 class="hero-title text-white mb-2 fw-bold">School of Agriculture</h1>
+              <p class="text-white-50 fs-5 mb-3">Pioneering Education in Agricultural Sciences, AgriTech & Sustainable Farming</p>
               <p id="breadcrumbs" class="breadcrumbs small text-white mb-0">
                 <span
                   ><span><a href="/">Home</a></span> »
@@ -1536,10 +1540,15 @@
         </div>
       </div>
     </section>
-    <section class="info bg-white">
+
+    <!-- Include Attribution & Enquiry Scripts -->
+    <script src="/wp-content/themes/kaveriuniversity/assets/js/agri-tracker.js"></script>
+    <script src="/wp-content/themes/kaveriuniversity/assets/js/agri-enquiry.js"></script>
+
+    <section class="info bg-white py-5">
       <div class="container">
-        <div class="row">
-          <div class="col-md-10">
+        <div class="row justify-content-between">
+          <div class="col-lg-7 col-md-12 mb-4 mb-lg-0">
             <div class="info-content">
               <div
                 data-elementor-type="wp-page"
@@ -1583,14 +1592,14 @@
                                     height="1500"
                                     src="/wp-content/uploads/2025/06/kaveri-Gallery-54.webp"
                                     class="elementor-animation-grow attachment-full size-full wp-image-1422"
-                                    alt="UG Programs"
+                                    alt=""
                                     srcset="
-                                      /wp-content/uploads/2025/06/kaveri-Gallery-54.webp           2250w,
-                                      /wp-content/uploads/2025/06/kaveri-Gallery-54-300x200.webp    300w,
-                                      /wp-content/uploads/2025/06/kaveri-Gallery-54-1024x683.webp  1024w,
-                                      /wp-content/uploads/2025/06/kaveri-Gallery-54-768x512.webp    768w,
-                                      /wp-content/uploads/2025/06/kaveri-Gallery-54-1536x1024.webp 1536w,
-                                      /wp-content/uploads/2025/06/kaveri-Gallery-54-2048x1365.webp 2048w
+                                      //wp-content/uploads/2025/06/kaveri-Gallery-54.webp           2250w,
+                                      //wp-content/uploads/2025/06/kaveri-Gallery-54-300x200.webp    300w,
+                                      //wp-content/uploads/2025/06/kaveri-Gallery-54-1024x683.webp  1024w,
+                                      //wp-content/uploads/2025/06/kaveri-Gallery-54-768x512.webp    768w,
+                                      //wp-content/uploads/2025/06/kaveri-Gallery-54-1536x1024.webp 1536w,
+                                      //wp-content/uploads/2025/06/kaveri-Gallery-54-2048x1365.webp 2048w
                                     "
                                     sizes="(max-width: 2250px) 100vw, 2250px"
                                 /></a>
@@ -1635,14 +1644,14 @@
                                     height="1500"
                                     src="/wp-content/uploads/2025/06/kaveri-Gallery-53.webp"
                                     class="elementor-animation-grow attachment-full size-full wp-image-1423"
-                                    alt="PG Programs"
+                                    alt=""
                                     srcset="
-                                      /wp-content/uploads/2025/06/kaveri-Gallery-53.webp           2250w,
-                                      /wp-content/uploads/2025/06/kaveri-Gallery-53-300x200.webp    300w,
-                                      /wp-content/uploads/2025/06/kaveri-Gallery-53-1024x683.webp  1024w,
-                                      /wp-content/uploads/2025/06/kaveri-Gallery-53-768x512.webp    768w,
-                                      /wp-content/uploads/2025/06/kaveri-Gallery-53-1536x1024.webp 1536w,
-                                      /wp-content/uploads/2025/06/kaveri-Gallery-53-2048x1365.webp 2048w
+                                      //wp-content/uploads/2025/06/kaveri-Gallery-53.webp           2250w,
+                                      //wp-content/uploads/2025/06/kaveri-Gallery-53-300x200.webp    300w,
+                                      //wp-content/uploads/2025/06/kaveri-Gallery-53-1024x683.webp  1024w,
+                                      //wp-content/uploads/2025/06/kaveri-Gallery-53-768x512.webp    768w,
+                                      //wp-content/uploads/2025/06/kaveri-Gallery-53-1536x1024.webp 1536w,
+                                      //wp-content/uploads/2025/06/kaveri-Gallery-53-2048x1365.webp 2048w
                                     "
                                     sizes="(max-width: 2250px) 100vw, 2250px"
                                 /></a>
@@ -2135,9 +2144,20 @@
               </div>
             </div>
           </div>
+          <div class="col-lg-5 col-md-12 mt-4 mt-lg-0">
+            <div id="agri-school-enquiry-widget" class="sticky-top" style="top: 100px; z-index: 10;"></div>
+          </div>
         </div>
       </div>
-    </div>
+    </section>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        if (window.KaveriEnquiry) {
+          window.KaveriEnquiry.init("agri-school-enquiry-widget");
+        }
+      });
+    </script>
     <!-- Modal -->
     <div
       class="modal fade"

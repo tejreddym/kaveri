@@ -1482,20 +1482,20 @@
       </marquee>
     </div>
 
-    <section class="py-5" style="background-color: #f8f9fa; min-height: 80vh">
+    <section class="py-5 hero-bg" style="background: url(/wp-content/themes/kaveriuniversity/assets/img/agri-hero-bg.jpg) center center no-repeat; background-size: cover; min-height: 80vh;">
       <div class="container">
         <div class="row justify-content-center">
-          <div class="col-lg-7 col-md-9">
-            <div class="card shadow border-0 rounded-3 overflow-hidden">
+          <div class="col-lg-6 col-md-8">
+            <div class="card shadow-sm border-0 rounded-0 overflow-hidden" style="font-family: 'Figtree', sans-serif;">
               <div
                 class="card-header text-white text-center py-4"
-                style="background-color: #22325c"
+                style="background-color: #22325c; border-bottom: 3px solid #b72928;"
               >
-                <span class="badge bg-warning text-dark mb-2 px-3 py-2 fw-bold text-uppercase" style="letter-spacing: 1px;">Admissions 2026–27 Open</span>
-                <h2 class="h3 mb-1 text-white fw-bold">Agriculture & AgriTech Admissions</h2>
-                <p class="mb-0 text-white-50 small">Kaveri University, Hyderabad</p>
+                <h1 class="h3 mb-1 text-white fw-bold text-uppercase" style="font-family: 'Lato', sans-serif; letter-spacing: 0.5px;">SCHOOL OF AGRICULTURE</h1>
+                <h2 class="h6 mb-2 text-warning fw-bold text-uppercase" style="font-family: 'Figtree', sans-serif;">Admissions Enquiry – 2026–27</h2>
+                <p class="mb-0 text-white-50 small" style="font-size: 0.85rem;">Interested in our Agriculture programmes? Get admission details and guidance from Kaveri University.</p>
               </div>
-              <div class="card-body p-4">
+              <div class="card-body p-4 bg-white">
                 <ul
                   class="nav nav-pills nav-justified mb-4"
                   id="authTabs"
@@ -1503,14 +1503,15 @@
                 >
                   <li class="nav-item" role="presentation">
                     <button
-                      class="nav-link active fw-bold py-2"
+                      class="nav-link active fw-bold py-2 rounded-0 text-uppercase"
                       id="apply-tab"
                       data-bs-toggle="tab"
                       data-bs-target="#apply-pane"
                       type="button"
                       role="tab"
+                      style="font-size: 0.85rem;"
                     >
-                      <i class="fa-solid fa-user-plus me-1"></i> Apply Now (New Student)
+                      <i class="fa-solid fa-file-signature me-1"></i> Admissions Enquiry
                     </button>
                   </li>
                   <li class="nav-item" role="presentation">
@@ -1528,172 +1529,13 @@
                 </ul>
 
                 <div class="tab-content" id="authTabsContent">
-                  <!-- Apply Now (OTP Registration Flow) -->
+                  <!-- Admissions Enquiry Pane -->
                   <div
                     class="tab-pane fade show active"
                     id="apply-pane"
                     role="tabpanel"
                   >
-                    <div id="apply-alert" class="alert d-none"></div>
-
-                    <!-- STEP 1: Mobile Number Input -->
-                    <div id="step-mobile" class="apply-step">
-                      <div class="mb-3">
-                        <label for="apply-mobile" class="form-label fw-semibold">Mobile Number <span class="text-danger">*</span></label>
-                        <div class="input-group">
-                          <span class="input-group-text bg-light text-muted fw-bold">+91</span>
-                          <input
-                            type="tel"
-                            class="form-control form-control-lg"
-                            id="apply-mobile"
-                            placeholder="Enter 10-digit mobile number"
-                            maxlength="10"
-                            pattern="[0-9]{10}"
-                            required
-                          />
-                        </div>
-                        <div class="form-text small">An OTP will be sent to verify your mobile number.</div>
-                      </div>
-                      <button
-                        type="button"
-                        id="btn-send-otp"
-                        class="btn btn-lg text-white w-100 fw-bold py-3 shadow-sm"
-                        style="background-color: #b72928; border: none;"
-                      >
-                        <i class="fa-solid fa-paper-plane me-2"></i> Send OTP to Continue
-                      </button>
-                    </div>
-
-                    <!-- STEP 2: OTP Verification -->
-                    <div id="step-otp" class="apply-step d-none">
-                      <div class="bg-light p-3 rounded mb-3 border">
-                        <div class="d-flex justify-content-between align-items-center">
-                          <div>
-                            <span class="text-muted small">Verification code sent to:</span>
-                            <div class="fw-bold text-dark fs-6" id="disp-mobile">+91 XXXXX XXXXX</div>
-                          </div>
-                          <button type="button" id="btn-edit-mobile" class="btn btn-sm btn-outline-secondary">
-                            <i class="fa-solid fa-pen me-1"></i> Edit
-                          </button>
-                        </div>
-                      </div>
-
-                      <div class="mb-3">
-                        <label for="apply-otp" class="form-label fw-semibold">Enter OTP Code <span class="text-danger">*</span></label>
-                        <input
-                          type="text"
-                          class="form-control form-control-lg text-center fw-bold fs-4"
-                          id="apply-otp"
-                          placeholder="••••"
-                          maxlength="6"
-                          style="letter-spacing: 6px;"
-                          required
-                        />
-                        <div class="d-flex justify-content-between align-items-center mt-2">
-                          <span id="timer-text" class="text-muted small">Resend OTP in <strong id="timer-count">60</strong>s</span>
-                          <button type="button" id="btn-resend-otp" class="btn btn-link btn-sm p-0 text-decoration-none d-none">Resend OTP</button>
-                        </div>
-                      </div>
-
-                      <button
-                        type="button"
-                        id="btn-verify-otp"
-                        class="btn btn-lg text-white w-100 fw-bold py-3 shadow-sm"
-                        style="background-color: #b72928; border: none;"
-                      >
-                        <i class="fa-solid fa-shield-check me-2"></i> Verify OTP & Proceed
-                      </button>
-                    </div>
-
-                    <!-- STEP 3: Application Form -->
-                    <div id="step-form" class="apply-step d-none">
-                      <div class="alert alert-success d-flex align-items-center py-2 px-3 mb-3">
-                        <i class="fa-solid fa-circle-check me-2 fs-5"></i>
-                        <div class="small">Mobile <strong><span id="form-verified-mobile"></span></strong> verified successfully!</div>
-                      </div>
-
-                      <form id="agri-app-form">
-                        <div class="mb-3">
-                          <label for="apply-name" class="form-label fw-semibold">Full Name <span class="text-danger">*</span></label>
-                          <input type="text" class="form-control" id="apply-name" placeholder="Enter student's full name" required />
-                        </div>
-
-                        <div class="mb-3">
-                          <label for="apply-email" class="form-label fw-semibold">Email Address <span class="text-danger">*</span></label>
-                          <input type="email" class="form-control" id="apply-email" placeholder="student@example.com" required />
-                        </div>
-
-                        <div class="mb-3">
-                          <label for="apply-course" class="form-label fw-semibold">Select Programme <span class="text-danger">*</span></label>
-                          <select class="form-select form-select-lg fw-bold" id="apply-course" required style="border-color: #22325c;">
-                            <option value="">-- Choose Programme --</option>
-                            <option value="B.Sc. (Hons.) Agriculture">B.Sc. (Hons.) Agriculture (4 Years)</option>
-                            <option value="B.Sc. (Hons.) AgriTech">B.Sc. (Hons.) AgriTech (4 Years)</option>
-                            <option value="B.Sc. (Hons.) Horticulture">B.Sc. (Hons.) Horticulture (4 Years)</option>
-                            <option value="M.Sc. Agriculture (Agronomy)">M.Sc. Agriculture (Agronomy)</option>
-                            <option value="M.Sc. Agriculture (Genetics & Plant Breeding)">M.Sc. Agriculture (Genetics & Plant Breeding)</option>
-                            <option value="MBA in Agribusiness Management">MBA in Agribusiness Management</option>
-                          </select>
-                        </div>
-
-                        <div class="row">
-                          <div class="col-md-6 mb-3">
-                            <label for="apply-state" class="form-label fw-semibold">State</label>
-                            <input type="text" class="form-control" id="apply-state" placeholder="e.g. Telangana" />
-                          </div>
-                          <div class="col-md-6 mb-3">
-                            <label for="apply-city" class="form-label fw-semibold">City / District</label>
-                            <input type="text" class="form-control" id="apply-city" placeholder="e.g. Hyderabad" />
-                          </div>
-                        </div>
-
-                        <div class="mb-3 form-check">
-                          <input type="checkbox" class="form-check-input" id="apply-consent" checked required />
-                          <label class="form-check-label small text-muted" for="apply-consent">
-                            I agree to the <a href="/terms-conditions" target="_blank">Terms & Conditions</a> and <a href="/privacy-policy" target="_blank">Privacy Policy</a>, and authorize Kaveri University to contact me regarding admissions.
-                          </label>
-                        </div>
-
-                        <button
-                          type="submit"
-                          id="btn-submit-app"
-                          class="btn btn-lg text-white w-100 fw-bold py-3 shadow"
-                          style="background-color: #b72928; border: none;"
-                        >
-                          <i class="fa-solid fa-paper-plane me-2"></i> Submit Application
-                        </button>
-                      </form>
-                    </div>
-
-                    <!-- STEP 4: Success Screen -->
-                    <div id="step-success" class="apply-step d-none text-center py-4">
-                      <div class="mb-3 text-success">
-                        <i class="fa-solid fa-circle-check display-3"></i>
-                      </div>
-                      <h3 class="fw-bold text-success mb-2">Application Submitted Successfully!</h3>
-                      <p class="text-muted mb-4 fs-6">Thank you for choosing Kaveri University for your Agriculture education.</p>
-
-                      <div class="bg-light p-4 rounded text-start mb-4 border">
-                        <div class="row g-2">
-                          <div class="col-6 text-muted small">Application Reference:</div>
-                          <div class="col-6 fw-bold text-dark text-end" id="succ-id">KAV-2026-XXXX</div>
-                          <div class="col-6 text-muted small">Programme Applied:</div>
-                          <div class="col-6 fw-bold text-dark text-end" id="succ-course">B.Sc. (Hons.) Agriculture</div>
-                          <div class="col-6 text-muted small">Verified Mobile:</div>
-                          <div class="col-6 fw-bold text-dark text-end" id="succ-mobile">+91 XXXXX XXXXX</div>
-                        </div>
-                      </div>
-
-                      <div class="alert alert-info text-start small mb-4">
-                        <i class="fa-solid fa-circle-info me-2"></i>
-                        <strong>Next Steps:</strong> Our Senior Admissions Counsellor will reach out to you within 24 hours to guide you through hostel allocations, scholarships, and document verification.
-                      </div>
-
-                      <div class="d-grid gap-2 col-md-8 mx-auto">
-                        <a href="/b-sc-hons-agriculture/" class="btn btn-outline-dark fw-bold py-2">Explore Agriculture Campus & Facilities</a>
-                        <a href="/" class="btn btn-link text-decoration-none text-muted">Return to Kaveri University Home</a>
-                      </div>
-                    </div>
+                    <div id="apply-page-enquiry-widget"></div>
                   </div>
 
                   <!-- Existing Login Form Pane -->
@@ -1747,11 +1589,15 @@
       </div>
     </section>
 
-    <!-- Include Attribution Tracker -->
+    <!-- Include Attribution & Enquiry Scripts -->
     <script src="/wp-content/themes/kaveriuniversity/assets/js/agri-tracker.js"></script>
+    <script src="/wp-content/themes/kaveriuniversity/assets/js/agri-enquiry.js"></script>
 
     <script>
       document.addEventListener("DOMContentLoaded", function () {
+        if (window.KaveriEnquiry) {
+          window.KaveriEnquiry.init("apply-page-enquiry-widget");
+        }
         var verifiedMobile = "";
         var resendTimer = null;
         var secondsLeft = 60;

@@ -1,11 +1,11 @@
 {
   "name": "kaveri-replica",
   "version": "1.0.0",
-  "description": "Static replica of Kaveri University",
-  "main": "index.html",
+  "description": "Kaveri University Website & Admission System",
+  "main": "server.js",
   "scripts": {
-    "start": "npx http-server . -p 8080",
-    "build": "echo 'No build step'"
+    "start": "node server.js",
+    "dev": "node server.js"
   },
   "dependencies": {}
 }

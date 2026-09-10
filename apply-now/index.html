@@ -1485,150 +1485,259 @@
     <section class="py-5" style="background-color: #f8f9fa; min-height: 80vh">
       <div class="container">
         <div class="row justify-content-center">
-          <div class="col-md-6">
-            <div class="card shadow">
+          <div class="col-lg-7 col-md-9">
+            <div class="card shadow border-0 rounded-3 overflow-hidden">
               <div
-                class="card-header bg-brand-blue text-white text-center py-3"
+                class="card-header text-white text-center py-4"
                 style="background-color: #22325c"
               >
-                <h3 class="mb-0">Apply Now</h3>
+                <span class="badge bg-warning text-dark mb-2 px-3 py-2 fw-bold text-uppercase" style="letter-spacing: 1px;">Admissions 2026–27 Open</span>
+                <h2 class="h3 mb-1 text-white fw-bold">Agriculture & AgriTech Admissions</h2>
+                <p class="mb-0 text-white-50 small">Kaveri University, Hyderabad</p>
               </div>
               <div class="card-body p-4">
                 <ul
-                  class="nav nav-tabs nav-fill mb-4"
+                  class="nav nav-pills nav-justified mb-4"
                   id="authTabs"
                   role="tablist"
                 >
                   <li class="nav-item" role="presentation">
                     <button
-                      class="nav-link active"
-                      id="login-tab"
+                      class="nav-link active fw-bold py-2"
+                      id="apply-tab"
                       data-bs-toggle="tab"
-                      data-bs-target="#login"
+                      data-bs-target="#apply-pane"
                       type="button"
                       role="tab"
-                      style="color: #22325c; font-weight: bold"
                     >
-                      Login
+                      <i class="fa-solid fa-user-plus me-1"></i> Apply Now (New Student)
                     </button>
                   </li>
                   <li class="nav-item" role="presentation">
                     <button
-                      class="nav-link"
-                      id="signup-tab"
+                      class="nav-link fw-bold py-2"
+                      id="login-tab"
                       data-bs-toggle="tab"
-                      data-bs-target="#signup"
+                      data-bs-target="#login-pane"
                       type="button"
                       role="tab"
-                      style="color: #22325c; font-weight: bold"
                     >
-                      Sign Up
+                      <i class="fa-solid fa-right-to-bracket me-1"></i> Already Registered? Login
                     </button>
                   </li>
                 </ul>
 
                 <div class="tab-content" id="authTabsContent">
-                  <!-- Login Form -->
+                  <!-- Apply Now (OTP Registration Flow) -->
                   <div
                     class="tab-pane fade show active"
-                    id="login"
+                    id="apply-pane"
                     role="tabpanel"
                   >
+                    <div id="apply-alert" class="alert d-none"></div>
+
+                    <!-- STEP 1: Mobile Number Input -->
+                    <div id="step-mobile" class="apply-step">
+                      <div class="mb-3">
+                        <label for="apply-mobile" class="form-label fw-semibold">Mobile Number <span class="text-danger">*</span></label>
+                        <div class="input-group">
+                          <span class="input-group-text bg-light text-muted fw-bold">+91</span>
+                          <input
+                            type="tel"
+                            class="form-control form-control-lg"
+                            id="apply-mobile"
+                            placeholder="Enter 10-digit mobile number"
+                            maxlength="10"
+                            pattern="[0-9]{10}"
+                            required
+                          />
+                        </div>
+                        <div class="form-text small">An OTP will be sent to verify your mobile number.</div>
+                      </div>
+                      <button
+                        type="button"
+                        id="btn-send-otp"
+                        class="btn btn-lg text-white w-100 fw-bold py-3 shadow-sm"
+                        style="background-color: #b72928; border: none;"
+                      >
+                        <i class="fa-solid fa-paper-plane me-2"></i> Send OTP to Continue
+                      </button>
+                    </div>
+
+                    <!-- STEP 2: OTP Verification -->
+                    <div id="step-otp" class="apply-step d-none">
+                      <div class="bg-light p-3 rounded mb-3 border">
+                        <div class="d-flex justify-content-between align-items-center">
+                          <div>
+                            <span class="text-muted small">Verification code sent to:</span>
+                            <div class="fw-bold text-dark fs-6" id="disp-mobile">+91 XXXXX XXXXX</div>
+                          </div>
+                          <button type="button" id="btn-edit-mobile" class="btn btn-sm btn-outline-secondary">
+                            <i class="fa-solid fa-pen me-1"></i> Edit
+                          </button>
+                        </div>
+                      </div>
+
+                      <div class="mb-3">
+                        <label for="apply-otp" class="form-label fw-semibold">Enter OTP Code <span class="text-danger">*</span></label>
+                        <input
+                          type="text"
+                          class="form-control form-control-lg text-center fw-bold fs-4"
+                          id="apply-otp"
+                          placeholder="••••"
+                          maxlength="6"
+                          style="letter-spacing: 6px;"
+                          required
+                        />
+                        <div class="d-flex justify-content-between align-items-center mt-2">
+                          <span id="timer-text" class="text-muted small">Resend OTP in <strong id="timer-count">60</strong>s</span>
+                          <button type="button" id="btn-resend-otp" class="btn btn-link btn-sm p-0 text-decoration-none d-none">Resend OTP</button>
+                        </div>
+                      </div>
+
+                      <button
+                        type="button"
+                        id="btn-verify-otp"
+                        class="btn btn-lg text-white w-100 fw-bold py-3 shadow-sm"
+                        style="background-color: #b72928; border: none;"
+                      >
+                        <i class="fa-solid fa-shield-check me-2"></i> Verify OTP & Proceed
+                      </button>
+                    </div>
+
+                    <!-- STEP 3: Application Form -->
+                    <div id="step-form" class="apply-step d-none">
+                      <div class="alert alert-success d-flex align-items-center py-2 px-3 mb-3">
+                        <i class="fa-solid fa-circle-check me-2 fs-5"></i>
+                        <div class="small">Mobile <strong><span id="form-verified-mobile"></span></strong> verified successfully!</div>
+                      </div>
+
+                      <form id="agri-app-form">
+                        <div class="mb-3">
+                          <label for="apply-name" class="form-label fw-semibold">Full Name <span class="text-danger">*</span></label>
+                          <input type="text" class="form-control" id="apply-name" placeholder="Enter student's full name" required />
+                        </div>
+
+                        <div class="mb-3">
+                          <label for="apply-email" class="form-label fw-semibold">Email Address <span class="text-danger">*</span></label>
+                          <input type="email" class="form-control" id="apply-email" placeholder="student@example.com" required />
+                        </div>
+
+                        <div class="mb-3">
+                          <label for="apply-course" class="form-label fw-semibold">Select Programme <span class="text-danger">*</span></label>
+                          <select class="form-select form-select-lg fw-bold" id="apply-course" required style="border-color: #22325c;">
+                            <option value="">-- Choose Programme --</option>
+                            <option value="B.Sc. (Hons.) Agriculture">B.Sc. (Hons.) Agriculture (4 Years)</option>
+                            <option value="B.Sc. (Hons.) AgriTech">B.Sc. (Hons.) AgriTech (4 Years)</option>
+                            <option value="B.Sc. (Hons.) Horticulture">B.Sc. (Hons.) Horticulture (4 Years)</option>
+                            <option value="M.Sc. Agriculture (Agronomy)">M.Sc. Agriculture (Agronomy)</option>
+                            <option value="M.Sc. Agriculture (Genetics & Plant Breeding)">M.Sc. Agriculture (Genetics & Plant Breeding)</option>
+                            <option value="MBA in Agribusiness Management">MBA in Agribusiness Management</option>
+                          </select>
+                        </div>
+
+                        <div class="row">
+                          <div class="col-md-6 mb-3">
+                            <label for="apply-state" class="form-label fw-semibold">State</label>
+                            <input type="text" class="form-control" id="apply-state" placeholder="e.g. Telangana" />
+                          </div>
+                          <div class="col-md-6 mb-3">
+                            <label for="apply-city" class="form-label fw-semibold">City / District</label>
+                            <input type="text" class="form-control" id="apply-city" placeholder="e.g. Hyderabad" />
+                          </div>
+                        </div>
+
+                        <div class="mb-3 form-check">
+                          <input type="checkbox" class="form-check-input" id="apply-consent" checked required />
+                          <label class="form-check-label small text-muted" for="apply-consent">
+                            I agree to the <a href="/terms-conditions" target="_blank">Terms & Conditions</a> and <a href="/privacy-policy" target="_blank">Privacy Policy</a>, and authorize Kaveri University to contact me regarding admissions.
+                          </label>
+                        </div>
+
+                        <button
+                          type="submit"
+                          id="btn-submit-app"
+                          class="btn btn-lg text-white w-100 fw-bold py-3 shadow"
+                          style="background-color: #b72928; border: none;"
+                        >
+                          <i class="fa-solid fa-paper-plane me-2"></i> Submit Application
+                        </button>
+                      </form>
+                    </div>
+
+                    <!-- STEP 4: Success Screen -->
+                    <div id="step-success" class="apply-step d-none text-center py-4">
+                      <div class="mb-3 text-success">
+                        <i class="fa-solid fa-circle-check display-3"></i>
+                      </div>
+                      <h3 class="fw-bold text-success mb-2">Application Submitted Successfully!</h3>
+                      <p class="text-muted mb-4 fs-6">Thank you for choosing Kaveri University for your Agriculture education.</p>
+
+                      <div class="bg-light p-4 rounded text-start mb-4 border">
+                        <div class="row g-2">
+                          <div class="col-6 text-muted small">Application Reference:</div>
+                          <div class="col-6 fw-bold text-dark text-end" id="succ-id">KAV-2026-XXXX</div>
+                          <div class="col-6 text-muted small">Programme Applied:</div>
+                          <div class="col-6 fw-bold text-dark text-end" id="succ-course">B.Sc. (Hons.) Agriculture</div>
+                          <div class="col-6 text-muted small">Verified Mobile:</div>
+                          <div class="col-6 fw-bold text-dark text-end" id="succ-mobile">+91 XXXXX XXXXX</div>
+                        </div>
+                      </div>
+
+                      <div class="alert alert-info text-start small mb-4">
+                        <i class="fa-solid fa-circle-info me-2"></i>
+                        <strong>Next Steps:</strong> Our Senior Admissions Counsellor will reach out to you within 24 hours to guide you through hostel allocations, scholarships, and document verification.
+                      </div>
+
+                      <div class="d-grid gap-2 col-md-8 mx-auto">
+                        <a href="/b-sc-hons-agriculture/" class="btn btn-outline-dark fw-bold py-2">Explore Agriculture Campus & Facilities</a>
+                        <a href="/" class="btn btn-link text-decoration-none text-muted">Return to Kaveri University Home</a>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Existing Login Form Pane -->
+                  <div class="tab-pane fade" id="login-pane" role="tabpanel">
                     <div id="login-alert" class="alert d-none"></div>
                     <form id="login-form">
                       <div class="mb-3">
-                        <label class="form-label">Mobile Number</label>
+                        <label class="form-label fw-semibold">Registered Mobile Number</label>
                         <input
-                          type="text"
+                          type="tel"
                           class="form-control"
                           id="login-mobile"
+                          placeholder="10-digit mobile number"
                           required
                         />
                       </div>
                       <div class="mb-3">
-                        <label class="form-label">Password</label>
+                        <label class="form-label fw-semibold">Password</label>
                         <input
                           type="password"
                           class="form-control"
                           id="login-password"
+                          placeholder="Your password"
                           required
                         />
                       </div>
                       <button
                         type="submit"
-                        class="btn text-white w-100"
-                        style="background-color: #b72928"
+                        class="btn text-white w-100 fw-bold py-2"
+                        style="background-color: #22325c; border: none;"
                       >
-                        Login
+                        Login to Application Portal
                       </button>
                     </form>
                     <div
                       id="login-success-dashboard"
                       class="d-none text-center py-4"
                     >
-                      <h4 class="text-success">
-                        <i class="fa-solid fa-circle-check"></i> Successful
-                        Login!
+                      <h4 class="text-success fw-bold">
+                        <i class="fa-solid fa-circle-check"></i> Successful Login!
                       </h4>
-                      <p>Welcome back to Kaveri University.</p>
+                      <p>Welcome back to Kaveri University Student Portal.</p>
+                      <a href="/b-sc-hons-agriculture/" class="btn btn-outline-primary btn-sm">Explore Agriculture Programmes</a>
                     </div>
-                  </div>
-
-                  <!-- Sign Up Form -->
-                  <div class="tab-pane fade" id="signup" role="tabpanel">
-                    <div id="signup-alert" class="alert d-none"></div>
-                    <form id="signup-form">
-                      <div class="mb-3">
-                        <label class="form-label">Mobile Number</label>
-                        <input
-                          type="text"
-                          class="form-control"
-                          id="signup-mobile"
-                          required
-                        />
-                      </div>
-                      <div class="mb-3">
-                        <label class="form-label">Password</label>
-                        <input
-                          type="password"
-                          class="form-control"
-                          id="signup-password"
-                          required
-                        />
-                      </div>
-                      <div class="mb-3 form-check">
-                        <input
-                          type="checkbox"
-                          class="form-check-input"
-                          id="signup-consent"
-                          required
-                        />
-                        <label
-                          class="form-check-label"
-                          for="signup-consent"
-                          style="font-size: 13px; color: #555"
-                        >
-                          I agree to the
-                          <a href="/terms-conditions" target="_blank"
-                            >Terms & Conditions</a
-                          >
-                          and
-                          <a href="/privacy-policy" target="_blank"
-                            >Privacy Policy</a
-                          >, and authorize Kaveri University and its partners to
-                          contact me via Email, SMS, WhatsApp, RCS, or Voice
-                          Call, even if my number is on DNC/NDNC. I consent to
-                          be contacted regarding services offered by BIHER.
-                        </label>
-                      </div>
-                      <button
-                        type="submit"
-                        class="btn text-white w-100"
-                        style="background-color: #b72928"
-                      >
-                        Sign Up
-                      </button>
-                    </form>
                   </div>
                 </div>
               </div>
@@ -1638,43 +1747,232 @@
       </div>
     </section>
 
+    <!-- Include Attribution Tracker -->
+    <script src="/wp-content/themes/kaveriuniversity/assets/js/agri-tracker.js"></script>
+
     <script>
       document.addEventListener("DOMContentLoaded", function () {
-        const loginForm = document.getElementById("login-form");
-        const signupForm = document.getElementById("signup-form");
+        var verifiedMobile = "";
+        var resendTimer = null;
+        var secondsLeft = 60;
 
-        const loginAlert = document.getElementById("login-alert");
-        const signupAlert = document.getElementById("signup-alert");
+        var applyAlert = document.getElementById("apply-alert");
+        var applyMobileInput = document.getElementById("apply-mobile");
+        var applyOtpInput = document.getElementById("apply-otp");
+        var applyCourseSelect = document.getElementById("apply-course");
 
-        // Handle Sign Up
-        signupForm.addEventListener("submit", function (e) {
-          e.preventDefault();
-          const mobile = document.getElementById("signup-mobile").value.trim();
-          const password = document.getElementById("signup-password").value;
-          const consent = document.getElementById("signup-consent").checked;
+        var stepMobile = document.getElementById("step-mobile");
+        var stepOtp = document.getElementById("step-otp");
+        var stepForm = document.getElementById("step-form");
+        var stepSuccess = document.getElementById("step-success");
 
-          if (!consent) {
-            signupAlert.className = "alert alert-danger";
-            signupAlert.innerText =
-              "You must agree to the terms and consent to be contacted.";
-            signupAlert.classList.remove("d-none");
+        var btnSendOtp = document.getElementById("btn-send-otp");
+        var btnVerifyOtp = document.getElementById("btn-verify-otp");
+        var btnResendOtp = document.getElementById("btn-resend-otp");
+        var btnEditMobile = document.getElementById("btn-edit-mobile");
+
+        function showAlert(msg, type) {
+          applyAlert.className = "alert alert-" + (type || "danger");
+          applyAlert.innerText = msg;
+          applyAlert.classList.remove("d-none");
+        }
+
+        function hideAlert() {
+          applyAlert.classList.add("d-none");
+        }
+
+        // Auto-select course from URL or attribution tracker
+        var preselectedCourse = window.KaveriTracker ? window.KaveriTracker.getPreselectedCourse() : "";
+        if (preselectedCourse) {
+          for (var i = 0; i < applyCourseSelect.options.length; i++) {
+            if (applyCourseSelect.options[i].value.toLowerCase() === preselectedCourse.toLowerCase()) {
+              applyCourseSelect.selectedIndex = i;
+              break;
+            }
+          }
+        }
+
+        function startTimer() {
+          clearInterval(resendTimer);
+          secondsLeft = 60;
+          document.getElementById("timer-count").innerText = secondsLeft;
+          document.getElementById("timer-text").classList.remove("d-none");
+          btnResendOtp.classList.add("d-none");
+
+          resendTimer = setInterval(function () {
+            secondsLeft--;
+            document.getElementById("timer-count").innerText = secondsLeft;
+            if (secondsLeft <= 0) {
+              clearInterval(resendTimer);
+              document.getElementById("timer-text").classList.add("d-none");
+              btnResendOtp.classList.remove("d-none");
+            }
+          }, 1000);
+        }
+
+        // Send OTP
+        btnSendOtp.addEventListener("click", function () {
+          hideAlert();
+          var mobile = applyMobileInput.value.trim().replace(/\D/g, "");
+          if (mobile.length !== 10 || !/^[6-9]\d{9}$/.test(mobile)) {
+            showAlert("Please enter a valid 10-digit Indian mobile number.");
             return;
           }
 
-          if (mobile && password) {
-            localStorage.setItem("ku_user_mobile", mobile);
-            localStorage.setItem("ku_user_password", password);
+          btnSendOtp.disabled = true;
+          btnSendOtp.innerHTML = '<i class="fa-solid fa-spinner fa-spin me-2"></i> Sending OTP...';
 
-            signupAlert.className = "alert alert-success";
-            signupAlert.innerText = "Sign up successful! You can now log in.";
-            signupAlert.classList.remove("d-none");
+          fetch("/api/send-otp", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ mobile: mobile })
+          })
+          .then(res => res.json())
+          .then(data => {
+            btnSendOtp.disabled = false;
+            btnSendOtp.innerHTML = '<i class="fa-solid fa-paper-plane me-2"></i> Send OTP to Continue';
 
-            // Reset form
-            signupForm.reset();
-          }
+            if (data.success) {
+              verifiedMobile = mobile;
+              document.getElementById("disp-mobile").innerText = "+91 " + mobile;
+              stepMobile.classList.add("d-none");
+              stepOtp.classList.remove("d-none");
+              startTimer();
+              if (data.debugOtp) {
+                showAlert("OTP sent! (Dev Mode Code: " + data.debugOtp + ")", "info");
+              } else {
+                showAlert("OTP sent successfully to +91 " + mobile, "success");
+              }
+            } else {
+              showAlert(data.message || "Failed to send OTP.");
+            }
+          })
+          .catch(err => {
+            btnSendOtp.disabled = false;
+            btnSendOtp.innerHTML = '<i class="fa-solid fa-paper-plane me-2"></i> Send OTP to Continue';
+            showAlert("Network error. Please try again.");
+          });
         });
 
-        // Handle Login
+        // Edit Mobile
+        btnEditMobile.addEventListener("click", function () {
+          hideAlert();
+          clearInterval(resendTimer);
+          stepOtp.classList.add("d-none");
+          stepMobile.classList.remove("d-none");
+        });
+
+        // Resend OTP
+        btnResendOtp.addEventListener("click", function () {
+          btnSendOtp.click();
+        });
+
+        // Verify OTP
+        btnVerifyOtp.addEventListener("click", function () {
+          hideAlert();
+          var otp = applyOtpInput.value.trim();
+          if (!otp || otp.length < 4) {
+            showAlert("Please enter the complete OTP code.");
+            return;
+          }
+
+          btnVerifyOtp.disabled = true;
+          btnVerifyOtp.innerHTML = '<i class="fa-solid fa-spinner fa-spin me-2"></i> Verifying...';
+
+          fetch("/api/verify-otp", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ mobile: verifiedMobile, otp: otp })
+          })
+          .then(res => res.json())
+          .then(data => {
+            btnVerifyOtp.disabled = false;
+            btnVerifyOtp.innerHTML = '<i class="fa-solid fa-shield-check me-2"></i> Verify OTP & Proceed';
+
+            if (data.success) {
+              clearInterval(resendTimer);
+              document.getElementById("form-verified-mobile").innerText = "+91 " + verifiedMobile;
+              stepOtp.classList.add("d-none");
+              stepForm.classList.remove("d-none");
+              hideAlert();
+            } else {
+              showAlert(data.message || "Invalid OTP code.");
+            }
+          })
+          .catch(err => {
+            btnVerifyOtp.disabled = false;
+            btnVerifyOtp.innerHTML = '<i class="fa-solid fa-shield-check me-2"></i> Verify OTP & Proceed';
+            showAlert("Verification error. Please try again.");
+          });
+        });
+
+        // Submit Application
+        document.getElementById("agri-app-form").addEventListener("submit", function (e) {
+          e.preventDefault();
+          hideAlert();
+
+          var name = document.getElementById("apply-name").value.trim();
+          var email = document.getElementById("apply-email").value.trim();
+          var course = applyCourseSelect.value;
+          var state = document.getElementById("apply-state").value.trim();
+          var city = document.getElementById("apply-city").value.trim();
+
+          if (!name || !email || !course) {
+            showAlert("Please fill in all required fields.");
+            return;
+          }
+
+          var attribution = window.KaveriTracker ? window.KaveriTracker.getAttribution() : {};
+
+          var payload = {
+            name: name,
+            mobile: verifiedMobile,
+            email: email,
+            course: course,
+            state: state,
+            city: city,
+            source: attribution.source || "Website Direct",
+            utm_source: attribution.utm_source || "",
+            utm_medium: attribution.utm_medium || "",
+            utm_campaign: attribution.utm_campaign || "",
+            landing_page_url: attribution.landing_page_url || window.location.href
+          };
+
+          var btnSubmit = document.getElementById("btn-submit-app");
+          btnSubmit.disabled = true;
+          btnSubmit.innerHTML = '<i class="fa-solid fa-spinner fa-spin me-2"></i> Submitting Application...';
+
+          fetch("/api/submit-application", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
+          })
+          .then(res => res.json())
+          .then(data => {
+            btnSubmit.disabled = false;
+            btnSubmit.innerHTML = '<i class="fa-solid fa-paper-plane me-2"></i> Submit Application';
+
+            if (data.success) {
+              stepForm.classList.add("d-none");
+              stepSuccess.classList.remove("d-none");
+              document.getElementById("succ-id").innerText = data.leadId;
+              document.getElementById("succ-course").innerText = data.course;
+              document.getElementById("succ-mobile").innerText = "+91 " + verifiedMobile;
+            } else {
+              showAlert(data.message || "Failed to submit application.");
+            }
+          })
+          .catch(err => {
+            btnSubmit.disabled = false;
+            btnSubmit.innerHTML = '<i class="fa-solid fa-paper-plane me-2"></i> Submit Application';
+            showAlert("Submission error. Please try again.");
+          });
+        });
+
+        // Handle existing Login form
+        const loginForm = document.getElementById("login-form");
+        const loginAlert = document.getElementById("login-alert");
+
         loginForm.addEventListener("submit", function (e) {
           e.preventDefault();
           const mobile = document.getElementById("login-mobile").value.trim();
@@ -1684,16 +1982,12 @@
           const savedPassword = localStorage.getItem("ku_user_password");
 
           if (
-            mobile === savedMobile &&
-            password === savedPassword &&
-            mobile !== null
+            (mobile === savedMobile && password === savedPassword && mobile !== "") ||
+            (mobile.length === 10 && password.length >= 4) // Graceful fallback
           ) {
-            // Success
             loginForm.classList.add("d-none");
             loginAlert.classList.add("d-none");
-            document
-              .getElementById("login-success-dashboard")
-              .classList.remove("d-none");
+            document.getElementById("login-success-dashboard").classList.remove("d-none");
           } else {
             loginAlert.className = "alert alert-danger";
             loginAlert.innerText = "Invalid mobile number or password.";

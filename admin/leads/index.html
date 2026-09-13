@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agriculture Admissions Enquiries & Google Sheets Integration | Kaveri University</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.3/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+  <style>
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f6f9; color: #333; }
+    .header-bar { background-color: #22325c; border-bottom: 4px solid #b72928; color: #fff; }
+    .card-custom { border: none; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); margin-bottom: 24px; }
+    .table-custom th { background-color: #22325c; color: #fff; font-size: 0.85rem; text-transform: uppercase; }
+    .badge-prog { background-color: #22325c; color: #fff; font-size: 0.75rem; }
+    .badge-ref { background-color: #b72928; color: #fff; font-size: 0.75rem; }
+    .code-box { background-color: #1e293b; color: #38bdf8; border-radius: 6px; padding: 16px; font-family: monospace; font-size: 0.85rem; max-height: 320px; overflow-y: auto; }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header-bar py-3 px-4">
+    <div class="container-fluid d-flex justify-content-between align-items-center">
+      <div>
+        <h4 class="mb-0 fw-bold"><i class="fa-solid fa-sheet-plastic text-warning me-2"></i> Agriculture Admissions Enquiries & Google Sheets Integration</h4>
+        <small class="text-white-50">Kaveri University, Hyderabad – Live Lead Capture & Real-time Sync</small>
+      </div>
+      <div>
+        <a href="/api/export-leads-csv" class="btn btn-warning text-dark fw-bold btn-sm rounded-1 me-2" download>
+          <i class="fa-solid fa-file-excel me-1"></i> Download CSV (Excel / Sheets)
+        </a>
+        <a href="/" class="btn btn-outline-light btn-sm rounded-1">
+          <i class="fa-solid fa-globe me-1"></i> Visit Website
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-fluid p-4">
+    <div class="row">
+
+      <!-- Left Column: Google Sheets Integration Setup -->
+      <div class="col-lg-5">
+        <div class="card card-custom p-4">
+          <h5 class="fw-bold text-dark mb-3"><i class="fa-solid fa-plug text-primary me-2"></i> Connect Google Sheets</h5>
+          <p class="text-muted small mb-3">
+            Enter your Google Apps Script Web App URL below to automatically sync every new enquiry to your Google Sheet in real time.
+          </p>
+
+          <form id="webhookForm">
+            <div class="mb-3">
+              <label class="form-label small fw-bold">Google Sheets Webhook URL *</label>
+              <input type="url" id="webhookUrlInput" class="form-control" placeholder="https://script.google.com/macros/s/AKfycb.../exec" required />
+            </div>
+            <div class="d-flex gap-2">
+              <button type="submit" id="btnSaveWebhook" class="btn btn-primary btn-sm fw-bold">
+                <i class="fa-solid fa-floppy-disk me-1"></i> Save & Sync All Leads
+              </button>
+            </div>
+          </form>
+          <div id="syncAlert" class="alert mt-3 d-none py-2 small"></div>
+
+          <hr class="my-4">
+
+          <h6 class="fw-bold text-dark mb-2"><i class="fa-solid fa-code text-danger me-2"></i> 1-Click Google Apps Script Setup Guide</h6>
+          <ol class="small text-muted ps-3 mb-3">
+            <li>Open your <strong>Google Sheet</strong>.</li>
+            <li>Click <strong>Extensions &rarr; Apps Script</strong>.</li>
+            <li>Paste the Code snippet below and click <strong>Save</strong>.</li>
+            <li>Click <strong>Deploy &rarr; New Deployment</strong>.</li>
+            <li>Select <strong>Web app</strong>, set <i>Who has access</i> to <strong>Anyone</strong>, click <strong>Deploy</strong>.</li>
+            <li>Copy the Web App URL and paste it in the box above!</li>
+          </ol>
+
+          <div class="position-relative">
+            <button class="btn btn-sm btn-dark position-absolute top-0 end-0 m-2" style="font-size: 0.75rem;" onclick="copyScriptCode()">
+              <i class="fa-solid fa-copy me-1"></i> Copy Code
+            </button>
+            <pre class="code-box" id="scriptCodeText"><code>function doPost(e) {
+  try {
+    var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+    var data = JSON.parse(e.postData.contents);
+    
+    if (sheet.getLastRow() === 0) {
+      sheet.appendRow(["Reference ID", "Date & Time", "Full Name", "Mobile Number", "Programme", "Source", "UTM Campaign", "Status"]);
+      sheet.getRange("1:1").setFontWeight("bold").setBackground("#22325c").setFontColor("#ffffff");
+    }
+    
+    sheet.appendRow([
+      data.id || '',
+      data.dateTime || new Date().toLocaleString(),
+      data.fullName || data.name || '',
+      data.mobile || '',
+      data.programme || data.course || '',
+      data.source || 'ChatGPT Ad',
+      data.utm_campaign || 'agriculture_2026',
+      data.status || 'New'
+    ]);
+    
+    return ContentService.createTextOutput(JSON.stringify({ result: "success" }))
+      .setMimeType(ContentService.MimeType.JSON);
+  } catch (err) {
+    return ContentService.createTextOutput(JSON.stringify({ result: "error", error: err.toString() }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+}</code></pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Live Captured Enquiries Table -->
+      <div class="col-lg-7">
+        <div class="card card-custom p-4">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h5 class="fw-bold text-dark mb-0"><i class="fa-solid fa-table-list text-success me-2"></i> Captured Enquiries (<span id="leadCount">0</span>)</h5>
+            <div class="d-flex gap-2">
+              <button class="btn btn-outline-secondary btn-sm" onclick="loadLeads()">
+                <i class="fa-solid fa-rotate me-1"></i> Refresh
+              </button>
+              <a href="/api/export-leads-csv" class="btn btn-success btn-sm fw-bold" download>
+                <i class="fa-solid fa-file-csv me-1"></i> Export to CSV
+              </a>
+            </div>
+          </div>
+
+          <div class="table-responsive" style="max-height: 600px;">
+            <table class="table table-hover align-middle table-custom border">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Date / Time</th>
+                  <th>Full Name</th>
+                  <th>Mobile Number</th>
+                  <th>Programme</th>
+                  <th>Source</th>
+                </tr>
+              </thead>
+              <tbody id="leadsTableBody">
+                <tr><td colspan="6" class="text-center text-muted py-4">Loading enquiries...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    function loadLeads() {
+      fetch('/api/leads')
+        .then(r => r.json())
+        .then(data => {
+          if (data.success && data.leads) {
+            document.getElementById('leadCount').innerText = data.leads.length;
+            var tbody = document.getElementById('leadsTableBody');
+            if (data.leads.length === 0) {
+              tbody.innerHTML = '<tr><td colspan="6" class="text-center text-muted py-4">No enquiries captured yet.</td></tr>';
+              return;
+            }
+            var html = '';
+            data.leads.forEach(function(l) {
+              html += '<tr>' +
+                '<td><span class="badge badge-ref">' + (l.id || 'N/A') + '</span></td>' +
+                '<td class="small">' + (l.dateTime || l.created_at || 'N/A') + '</td>' +
+                '<td class="fw-bold text-dark">' + (l.fullName || l.name || 'N/A') + '</td>' +
+                '<td class="fw-bold text-primary">+91 ' + (l.mobile || 'N/A') + '</td>' +
+                '<td><span class="badge badge-prog">' + (l.programme || l.course || 'N/A') + '</span></td>' +
+                '<td class="small text-muted">' + (l.source || 'N/A') + '</td>' +
+              '</tr>';
+            });
+            tbody.innerHTML = html;
+          }
+        })
+        .catch(err => {
+          document.getElementById('leadsTableBody').innerHTML = '<tr><td colspan="6" class="text-center text-danger py-4">Failed to load leads.</td></tr>';
+        });
+    }
+
+    document.getElementById('webhookForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      var url = document.getElementById('webhookUrlInput').value.trim();
+      var btn = document.getElementById('btnSaveWebhook');
+      var alertBox = document.getElementById('syncAlert');
+
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin me-1"></i> Syncing to Google Sheets...';
+      alertBox.className = 'alert alert-info py-2 small';
+      alertBox.innerText = 'Connecting and syncing enquiries with Google Sheets...';
+      alertBox.classList.remove('d-none');
+
+      fetch('/api/sync-google-sheets', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ webhookUrl: url })
+      })
+      .then(r => r.json())
+      .then(res => {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fa-solid fa-floppy-disk me-1"></i> Save & Sync All Leads';
+        if (res.success) {
+          alertBox.className = 'alert alert-success py-2 small';
+          alertBox.innerText = res.message;
+        } else {
+          alertBox.className = 'alert alert-danger py-2 small';
+          alertBox.innerText = res.message || 'Failed to sync with Google Sheets.';
+        }
+      })
+      .catch(err => {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fa-solid fa-floppy-disk me-1"></i> Save & Sync All Leads';
+        alertBox.className = 'alert alert-danger py-2 small';
+        alertBox.innerText = 'Network error during sync.';
+      });
+    });
+
+    function copyScriptCode() {
+      var code = document.getElementById('scriptCodeText').innerText;
+      navigator.clipboard.writeText(code).then(function() {
+        alert('Google Apps Script code copied to clipboard!');
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', loadLeads);
+  </script>
+</body>
+</html>

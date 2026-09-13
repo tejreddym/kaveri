@@ -1484,11 +1484,13 @@
 
     <section class="hero-slider">
       <div
-        class="hero hero-overla d-flex align-items-md-end align-items-center text-md-start text-center"
+        class="hero hero-overlay d-flex align-items-md-end align-items-center text-md-start text-center"
         style="
-          background: url(/wp-content/themes/kaveriuniversity/assets/img/img-hero-banner-01.webp)
-            center center no-repeat;
+          background-image: url('/wp-content/themes/kaveriuniversity/assets/img/img-hero-banner-01.webp');
+          background-position: center center;
+          background-repeat: no-repeat;
           background-size: cover;
+          min-height: 550px;
         "
       >
         <div class="container">
@@ -1515,9 +1517,11 @@
       <div
         class="hero hero-overlay d-flex align-items-md-end align-items-center text-md-start text-center"
         style="
-          background: url(/wp-content/themes/kaveriuniversity/assets/img/img-hero-banner-02.webp)
-            center center no-repeat;
+          background-image: url('/wp-content/themes/kaveriuniversity/assets/img/img-hero-banner-02.webp');
+          background-position: center center;
+          background-repeat: no-repeat;
           background-size: cover;
+          min-height: 550px;
         "
       >
         <div class="container">
@@ -1570,9 +1574,11 @@
       <div
         class="hero hero-overlay d-flex align-items-md-end align-items-center text-md-start text-center"
         style="
-          background: url(&quot;/wp-content/uploads/2025/01/hero-banner-img-02-final.webp&quot;)
-            center center no-repeat;
+          background-image: url('/wp-content/uploads/2025/01/hero-banner-img-02-final.webp');
+          background-position: center center;
+          background-repeat: no-repeat;
           background-size: cover;
+          min-height: 550px;
         "
       >
         <div class="container">
@@ -1593,9 +1599,11 @@
       <div
         class="hero hero-overlay d-flex align-items-md-end align-items-center text-md-start text-center"
         style="
-          background: url(/wp-content/themes/kaveriuniversity/assets/img/img-hero-banner-03.webp)
-            center center no-repeat;
+          background-image: url('/wp-content/themes/kaveriuniversity/assets/img/img-hero-banner-03.webp');
+          background-position: center center;
+          background-repeat: no-repeat;
           background-size: cover;
+          min-height: 550px;
         "
       >
         <div class="container">
@@ -1616,9 +1624,11 @@
       <div
         class="hero hero-overlay d-flex align-items-md-end align-items-center text-md-start text-center"
         style="
-          background: url(/wp-content/uploads/2025/12/WhatsApp-Image-2025-12-16-at-12.02.10-PM-scaled.jpeg)
-            center center no-repeat;
+          background-image: url('/wp-content/uploads/2025/12/WhatsApp-Image-2025-12-16-at-12.02.10-PM-scaled.jpeg');
+          background-position: center center;
+          background-repeat: no-repeat;
           background-size: cover;
+          min-height: 550px;
         "
       >
         <div class="container">
@@ -2573,145 +2583,195 @@
         ]
       }
     </script>
+    <!-- Agriculture Admissions Popup Modal -->
     <div
-      data-elementor-type="popup"
-      data-elementor-id="2722"
-      class="elementor elementor-2722 elementor-location-popup"
-      data-elementor-settings='{"entrance_animation":"fadeInDown","exit_animation":"fadeInDown","open_selector":"open-form","entrance_animation_duration":{"unit":"px","size":1.2,"sizes":[]},"a11y_navigation":"yes","triggers":[],"timing":[]}'
-      data-elementor-post-type="elementor_library"
+      class="modal fade"
+      id="agriAdmissionsModal"
+      tabindex="-1"
+      aria-labelledby="agriAdmissionsModalLabel"
+      aria-hidden="true"
+      style="z-index: 99999;"
     >
-      <section
-        class="elementor-section elementor-top-section elementor-element elementor-element-695c68a elementor-section-full_width elementor-section-height-min-height elementor-section-height-default elementor-section-items-middle"
-        data-id="695c68a"
-        data-element_type="section"
-        data-e-type="section"
-      >
-        <div class="elementor-container elementor-column-gap-default">
-          <div
-            class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-2038260"
-            data-id="2038260"
-            data-element_type="column"
-            data-e-type="column"
-          >
-            <div class="elementor-widget-wrap elementor-element-populated">
-              <div
-                class="elementor-element elementor-element-50c7213 elementor-widget elementor-widget-image"
-                data-id="50c7213"
-                data-element_type="widget"
-                data-e-type="widget"
-                data-widget_type="image.default"
-              >
-                <div class="elementor-widget-container">
-                  <img
-                    fetchpriority="high"
-                    width="1371"
-                    height="421"
-                    src="/wp-content/uploads/2026/03/brand-logo-1.webp"
-                    class="attachment-full size-full wp-image-2741"
-                    alt=""
-                    srcset="
-                      //wp-content/uploads/2026/03/brand-logo-1.webp          1371w,
-                      //wp-content/uploads/2026/03/brand-logo-1-300x92.webp    300w,
-                      //wp-content/uploads/2026/03/brand-logo-1-1024x314.webp 1024w,
-                      //wp-content/uploads/2026/03/brand-logo-1-768x236.webp   768w
-                    "
-                    sizes="(max-width: 1371px) 100vw, 1371px"
-                  />
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content border-0 shadow-lg rounded-3 overflow-hidden">
+          <!-- Header Banner -->
+          <div class="p-3 text-white d-flex justify-content-between align-items-center" style="background-color: #22325c;">
+            <div class="small fw-bold text-uppercase">
+              <i class="fa-solid fa-graduation-cap text-warning me-2"></i>
+              ADMISSIONS 2026–27 | Kaveri University, Hyderabad
+            </div>
+            <button
+              type="button"
+              class="btn-close btn-close-white"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+
+          <!-- Modal Body: Main View -->
+          <div class="modal-body p-4 text-center bg-white" id="modalMainView">
+            <h3 class="fw-bold text-uppercase mb-2" style="color: #22325c; font-size: 1.5rem;">
+              AGRICULTURE ADMISSIONS 2026–27 ARE OPEN
+            </h3>
+            <p class="text-muted mb-4 small">
+              Build your career in modern Agricultural Sciences, AgriTech & Horticulture at Kaveri University.
+            </p>
+
+            <!-- 3 Programme Cards -->
+            <div class="row g-3 mb-4 text-start">
+              <div class="col-md-4">
+                <div class="card h-100 border-1 rounded-2 p-3 text-center shadow-sm" style="border-color: #e0e0e0; background: #f8f9fa;">
+                  <i class="fa-solid fa-wheat-field fa-2x mb-2" style="color: #b72928;"></i>
+                  <h6 class="fw-bold text-dark mb-1">B.Sc. (Hons.) Agriculture</h6>
+                  <span class="badge bg-danger mb-2" style="background-color: #b72928 !important;">4-Year Degree</span>
+                  <p class="small text-muted mb-0">ICAR Curriculum</p>
                 </div>
               </div>
-              <div
-                class="elementor-element elementor-element-6b4364f elementor-widget elementor-widget-heading"
-                data-id="6b4364f"
-                data-element_type="widget"
-                data-e-type="widget"
-                data-widget_type="heading.default"
-              >
-                <div class="elementor-widget-container">
-                  <h2 class="elementor-heading-title elementor-size-default">
-                    Admissions Open 2026-27
-                  </h2>
+              <div class="col-md-4">
+                <div class="card h-100 border-1 rounded-2 p-3 text-center shadow-sm" style="border-color: #e0e0e0; background: #f8f9fa;">
+                  <i class="fa-solid fa-microchip fa-2x mb-2" style="color: #22325c;"></i>
+                  <h6 class="fw-bold text-dark mb-1">B.Sc. (Hons.) AgriTech</h6>
+                  <span class="badge bg-primary mb-2" style="background-color: #22325c !important;">Smart Farming</span>
+                  <p class="small text-muted mb-0">Drones & AI</p>
                 </div>
               </div>
-              <section
-                class="elementor-section elementor-inner-section elementor-element elementor-element-3af6101 elementor-section-boxed elementor-section-height-default elementor-section-height-default"
-                data-id="3af6101"
-                data-element_type="section"
-                data-e-type="section"
-              >
-                <div class="elementor-container elementor-column-gap-default">
-                  <div
-                    class="elementor-column elementor-col-50 elementor-inner-column elementor-element elementor-element-201057a"
-                    data-id="201057a"
-                    data-element_type="column"
-                    data-e-type="column"
-                  >
-                    <div
-                      class="elementor-widget-wrap elementor-element-populated"
-                    >
-                      <div
-                        class="elementor-element elementor-element-db9558c elementor-align-justify elementor-widget elementor-widget-button"
-                        data-id="db9558c"
-                        data-element_type="widget"
-                        data-e-type="widget"
-                        data-widget_type="button.default"
-                      >
-                        <div class="elementor-widget-container">
-                          <div class="elementor-button-wrapper">
-                            <a
-                              class="elementor-button elementor-button-link elementor-size-sm"
-                              href="https://ku.beessoftware.cloud/PublicAdmissionPortal/PreAdmission/Applicationform?t=YC8M59L173gOZjmHKxr_qA"
-                            >
-                              <span class="elementor-button-content-wrapper">
-                                <span class="elementor-button-text"
-                                  >New Registration</span
-                                >
-                              </span>
-                            </a>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div
-                    class="elementor-column elementor-col-50 elementor-inner-column elementor-element elementor-element-dc1071e"
-                    data-id="dc1071e"
-                    data-element_type="column"
-                    data-e-type="column"
-                  >
-                    <div
-                      class="elementor-widget-wrap elementor-element-populated"
-                    >
-                      <div
-                        class="elementor-element elementor-element-236566c elementor-align-justify elementor-widget elementor-widget-button"
-                        data-id="236566c"
-                        data-element_type="widget"
-                        data-e-type="widget"
-                        data-widget_type="button.default"
-                      >
-                        <div class="elementor-widget-container">
-                          <div class="elementor-button-wrapper">
-                            <a
-                              class="elementor-button elementor-button-link elementor-size-sm"
-                              href="https://ku.beessoftware.cloud/PublicAdmissionPortal/PreAdmission/LoginPagePreadmission?t=YC8M59L173gOZjmHKxr_qA"
-                            >
-                              <span class="elementor-button-content-wrapper">
-                                <span class="elementor-button-text"
-                                  >Existing User
-                                </span>
-                              </span>
-                            </a>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+              <div class="col-md-4">
+                <div class="card h-100 border-1 rounded-2 p-3 text-center shadow-sm" style="border-color: #e0e0e0; background: #f8f9fa;">
+                  <i class="fa-solid fa-seedling fa-2x mb-2" style="color: #198754;"></i>
+                  <h6 class="fw-bold text-dark mb-1">B.Sc. (Hons.) Horticulture</h6>
+                  <span class="badge bg-success mb-2">Fruit & Crop Tech</span>
+                  <p class="small text-muted mb-0">Greenhouses</p>
                 </div>
-              </section>
+              </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="d-flex flex-column flex-sm-row justify-content-center gap-3">
+              <a
+                href="/agriculture-programmes/"
+                class="btn px-4 py-2 text-white fw-bold text-uppercase rounded-1"
+                style="background-color: #22325c; font-size: 0.9rem;"
+              >
+                <i class="fa-solid fa-compass me-2"></i>Explore Agriculture Programmes
+              </a>
+              <button
+                type="button"
+                id="btnShowEnquiryForm"
+                class="btn px-4 py-2 text-white fw-bold text-uppercase rounded-1"
+                style="background-color: #b72928; font-size: 0.9rem;"
+              >
+                <i class="fa-solid fa-paper-plane me-2"></i>Enquire Now
+              </button>
+            </div>
+          </div>
+
+          <!-- Inline Simple Enquiry Form View -->
+          <div class="modal-body p-4 bg-white d-none" id="modalEnquiryFormView">
+            <h4 class="fw-bold text-uppercase mb-2 text-center" style="color: #22325c; font-size: 1.25rem;">
+              School of Agriculture Enquiry 2026–27
+            </h4>
+            <p class="text-muted small text-center mb-4">
+              Enter your details to receive admission & fee details instantly.
+            </p>
+
+            <form id="agriSimpleEnquiryForm" onsubmit="handleAgriSimpleEnquiry(event)">
+              <div class="mb-3">
+                <label class="form-label small fw-bold text-dark">Full Name *</label>
+                <input type="text" class="form-control form-control-lg fs-6" id="enqFullName" placeholder="Enter your full name" required />
+              </div>
+              <div class="mb-3">
+                <label class="form-label small fw-bold text-dark">Mobile Number *</label>
+                <div class="input-group">
+                  <span class="input-group-text bg-light fw-bold">+91</span>
+                  <input type="tel" class="form-control form-control-lg fs-6" id="enqMobile" pattern="[6-9][0-9]{9}" maxLength="10" placeholder="10-digit mobile number" required />
+                </div>
+              </div>
+              <div class="mb-3">
+                <label class="form-label small fw-bold text-dark">Interested Programme *</label>
+                <select class="form-select form-select-lg fs-6" id="enqProgramme" required>
+                  <option value="B.Sc. (Hons.) Agriculture">B.Sc. (Hons.) Agriculture</option>
+                  <option value="B.Sc. (Hons.) AgriTech">B.Sc. (Hons.) AgriTech</option>
+                  <option value="B.Sc. (Hons.) Horticulture">B.Sc. (Hons.) Horticulture</option>
+                </select>
+              </div>
+              <div class="d-flex justify-content-between align-items-center mt-4">
+                <button type="button" class="btn btn-outline-secondary btn-sm" id="btnBackToMain">
+                  <i class="fa-solid fa-arrow-left me-1"></i> Back
+                </button>
+                <button type="submit" class="btn px-4 py-2 text-white fw-bold text-uppercase rounded-1" style="background-color: #b72928;">
+                  Submit Enquiry <i class="fa-solid fa-check ms-1"></i>
+                </button>
+              </div>
+            </form>
+            <div id="agriEnquirySuccessMsg" class="alert alert-success mt-3 d-none">
+              <h6 class="fw-bold mb-1"><i class="fa-solid fa-circle-check me-2"></i>Thank You!</h6>
+              <p class="small mb-0">Your enquiry has been received. Our admissions counselor will contact you shortly.</p>
             </div>
           </div>
         </div>
-      </section>
+      </div>
     </div>
+
+    <!-- Script to Auto Show Modal and handle Enquiry submission without OTP -->
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        var modalEl = document.getElementById('agriAdmissionsModal');
+        if (modalEl && typeof bootstrap !== 'undefined') {
+          var bsModal = new bootstrap.Modal(modalEl, { backdrop: 'static', keyboard: true });
+          bsModal.show();
+        }
+
+        var btnEnquire = document.getElementById('btnShowEnquiryForm');
+        var btnBack = document.getElementById('btnBackToMain');
+        var mainView = document.getElementById('modalMainView');
+        var formView = document.getElementById('modalEnquiryFormView');
+
+        if (btnEnquire) {
+          btnEnquire.addEventListener('click', function() {
+            mainView.classList.add('d-none');
+            formView.classList.remove('d-none');
+          });
+        }
+
+        if (btnBack) {
+          btnBack.addEventListener('click', function() {
+            formView.classList.add('d-none');
+            mainView.classList.remove('d-none');
+          });
+        }
+      });
+
+      function handleAgriSimpleEnquiry(e) {
+        e.preventDefault();
+        var name = document.getElementById('enqFullName').value.trim();
+        var mobile = document.getElementById('enqMobile').value.trim();
+        var programme = document.getElementById('enqProgramme').value;
+
+        if (!name || !mobile || mobile.length !== 10) {
+          alert('Please enter a valid 10-digit mobile number.');
+          return;
+        }
+
+        fetch('/api/submit-enquiry', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ fullName: name, mobile: mobile, programme: programme, source: 'Homepage Popup' })
+        })
+        .then(res => res.json())
+        .then(data => {
+          if (data.success) {
+            document.getElementById('agriSimpleEnquiryForm').classList.add('d-none');
+            document.getElementById('agriEnquirySuccessMsg').classList.remove('d-none');
+          } else {
+            alert(data.message || 'Error submitting enquiry.');
+          }
+        })
+        .catch(err => {
+          console.error(err);
+          alert('Failed to submit enquiry. Please try again.');
+        });
+      }
+    </script>
     <script>
       const lazyloadRunObserver = () => {
         const lazyloadBackgrounds = document.querySelectorAll(
@@ -3397,91 +3457,6 @@
             });
           }
         });
-      });
-    </script>
-
-    <!-- Attribution Tracker -->
-    <script src="/wp-content/themes/kaveriuniversity/assets/js/agri-tracker.js"></script>
-
-    <!-- Agriculture Admission 2026-27 Homepage Modal Popup -->
-    <div id="agri-admission-modal" class="modal fade" tabindex="-1" aria-hidden="true" style="display: none;">
-      <div class="modal-dialog modal-dialog-centered modal-lg">
-        <div class="modal-content border-0 shadow-lg overflow-hidden rounded-3">
-          <div class="modal-header text-white border-0 py-3" style="background-color: #22325c;">
-            <div class="d-flex align-items-center">
-              <span class="badge bg-warning text-dark me-2 px-2 py-1 fw-bold text-uppercase" style="font-size: 0.75rem;">Admissions 2026–27</span>
-              <h5 class="modal-title fw-bold text-white mb-0 fs-6">Kaveri University, Hyderabad</h5>
-            </div>
-            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" id="agri-modal-close-x"></button>
-          </div>
-          <div class="modal-body p-4 bg-white text-center">
-            <h3 class="fw-bold mb-2 text-uppercase" style="color: #b72928; letter-spacing: 0.5px;">AGRICULTURE ADMISSIONS 2026–27 ARE OPEN</h3>
-            <p class="text-muted mb-4 small">Build your career in modern Agricultural Sciences, AgriTech & Horticulture at Kaveri University.</p>
-
-            <div class="row g-3 justify-content-center mb-4">
-              <div class="col-md-4 col-12">
-                <div class="p-3 border rounded bg-light text-start h-100">
-                  <div class="fw-bold text-dark mb-1"><i class="fa-solid fa-seedling text-success me-1"></i> B.Sc. (Hons.) Agriculture</div>
-                  <div class="small text-muted">4-Year Degree • ICAR Curriculum</div>
-                </div>
-              </div>
-              <div class="col-md-4 col-12">
-                <div class="p-3 border rounded bg-light text-start h-100">
-                  <div class="fw-bold text-dark mb-1"><i class="fa-solid fa-microchip text-primary me-1"></i> B.Sc. (Hons.) AgriTech</div>
-                  <div class="small text-muted">Smart Farming • Drones & AI</div>
-                </div>
-              </div>
-              <div class="col-md-4 col-12">
-                <div class="p-3 border rounded bg-light text-start h-100">
-                  <div class="fw-bold text-dark mb-1"><i class="fa-solid fa-apple-whole text-danger me-1"></i> B.Sc. (Hons.) Horticulture</div>
-                  <div class="small text-muted">Fruit & Crop Tech • Greenhouses</div>
-                </div>
-              </div>
-            </div>
-
-            <div class="d-flex flex-column flex-sm-row justify-content-center gap-2">
-              <a href="/b-sc-hons-agriculture/" class="btn text-white fw-bold px-4 py-2 rounded-2" style="background-color: #22325c;" id="agri-modal-cta">
-                <i class="fa-solid fa-compass me-2"></i> Explore Agriculture Programmes
-              </a>
-              <a href="/apply-now/?course=b-sc-hons-agriculture" class="btn text-white fw-bold px-4 py-2 rounded-2" style="background-color: #b72928;">
-                <i class="fa-solid fa-file-pen me-2"></i> Apply Now
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        if (!sessionStorage.getItem("ku_agri_popup_shown")) {
-          setTimeout(function () {
-            var modalEl = document.getElementById("agri-admission-modal");
-            if (modalEl) {
-              modalEl.style.display = "block";
-              modalEl.classList.add("show");
-              document.body.classList.add("modal-open");
-
-              var backdrop = document.createElement("div");
-              backdrop.className = "modal-backdrop fade show";
-              backdrop.id = "agri-modal-backdrop";
-              document.body.appendChild(backdrop);
-
-              function closeModal() {
-                modalEl.style.display = "none";
-                modalEl.classList.remove("show");
-                document.body.classList.remove("modal-open");
-                var bd = document.getElementById("agri-modal-backdrop");
-                if (bd) bd.remove();
-                sessionStorage.setItem("ku_agri_popup_shown", "true");
-              }
-
-              var closeBtnX = document.getElementById("agri-modal-close-x");
-              if (closeBtnX) closeBtnX.addEventListener("click", closeModal);
-              backdrop.addEventListener("click", closeModal);
-            }
-          }, 1500);
-        }
       });
     </script>
   </body>

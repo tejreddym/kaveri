@@ -7,5 +7,7 @@
     "start": "node server.js",
     "dev": "node server.js"
   },
-  "dependencies": {}
+  "dependencies": {
+    "puppeteer-core": "^25.10.0"
+  }
 }

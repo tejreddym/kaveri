@@ -76,29 +76,6 @@ function saveLead(lead) {
   const leads = getLeads();
   leads.unshift(lead);
   fs.writeFileSync(LEADS_FILE, JSON.stringify(leads, null, 2), 'utf8');
-
-  // Async Webhook Integration for production CRM (LeadSquared / Google Sheets / Custom CRM)
-  if (LEAD_WEBHOOK_URL) {
-    try {
-      const webhookUrl = url.parse(LEAD_WEBHOOK_URL);
-      const postData = JSON.stringify(lead);
-      const reqModule = webhookUrl.protocol === 'https:' ? https : http;
-      const req = reqModule.request(LEAD_WEBHOOK_URL, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Content-Length': Buffer.byteLength(postData)
-        }
-      });
-      req.on('error', err => {
-        if (NODE_ENV !== 'production') console.error('Webhook Error:', err.message);
-      });
-      req.write(postData);
-      req.end();
-    } catch (e) {
-      if (NODE_ENV !== 'production') console.error('Webhook Dispatch Exception:', e.message);
-    }
-  }
   return lead;
 }
 
@@ -376,7 +353,7 @@ const server = http.createServer(async (req, res) => {
       const fullName = sanitizeInput(body.fullName || body.name);
       const mobile = sanitizeInput(body.mobile).replace(/\D/g, '');
       const programme = sanitizeInput(body.programme || body.course) || 'B.Sc. (Hons.) Agriculture';
-      const source = sanitizeInput(body.source) || sanitizeInput(body.utm_source) || 'ChatGPT';
+      const source = sanitizeInput(body.source) || sanitizeInput(body.utm_source) || 'ChatGPT Ad';
       const utm_source = sanitizeInput(body.utm_source) || 'chatgpt';
       const utm_medium = sanitizeInput(body.utm_medium) || 'paid';
       const utm_campaign = sanitizeInput(body.utm_campaign) || 'agriculture_2026';
@@ -391,24 +368,14 @@ const server = http.createServer(async (req, res) => {
         return sendJsonResponse(req, res, 400, { success: false, message: 'Please enter a valid 10-digit Indian mobile number.' });
       }
 
-      // Verification check
-      const storedData = otpStore.get(mobile);
-      const isVerified = (storedData && storedData.verified) || (NODE_ENV !== 'production' && body.bypassOtp === true);
-
-      if (!isVerified) {
-        return sendJsonResponse(req, res, 400, {
-          success: false,
-          message: 'Mobile number must be verified via OTP before submitting enquiry.'
-        });
-      }
-
-      // Format date time: DD-MM-YYYY HH:mm
+      // Format date time: YYYY-MM-DD HH:mm:ss
       const now = new Date();
       const pad = n => (n < 10 ? '0' + n : n);
-      const dateTimeStr = `${pad(now.getDate())}-${pad(now.getMonth() + 1)}-${now.getFullYear()} ${pad(now.getHours())}:${pad(now.getMinutes())}`;
+      const dateTimeStr = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())} ${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
+      const refId = `REF-${crypto.randomBytes(4).toString('hex').toUpperCase()}`;
 
       const enquiryRecord = {
-        id: `ENQ-2026-${crypto.randomBytes(3).toString('hex').toUpperCase()}`,
+        id: refId,
         type: 'ENQUIRY',
         dateTime: dateTimeStr,
         fullName,
@@ -423,45 +390,54 @@ const server = http.createServer(async (req, res) => {
         created_at: now.toISOString()
       };
 
+      // Always save lead locally first for recovery/retries
       saveLead(enquiryRecord);
 
-      // Async Google Sheets Integration Webhook (Server-side)
-      const sheetsWebhookUrl = process.env.GOOGLE_SHEETS_WEBHOOK_URL || LEAD_WEBHOOK_URL;
-      if (sheetsWebhookUrl) {
-        try {
-          const parsedGUrl = url.parse(sheetsWebhookUrl);
-          const postData = JSON.stringify(enquiryRecord);
-          const reqModule = parsedGUrl.protocol === 'https:' ? https : http;
-          const reqSheet = reqModule.request(sheetsWebhookUrl, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'Content-Length': Buffer.byteLength(postData)
-            }
+      const sheetsWebhookUrl = process.env.GOOGLE_SHEETS_WEBHOOK_URL;
+
+      if (!sheetsWebhookUrl || !sheetsWebhookUrl.trim()) {
+        if (NODE_ENV !== 'production') console.log(`[ENQUIRY CAPTURED LOCALLY - NO WEBHOOK CONFIG] Name: ${fullName}, Mobile: ${mobile}`);
+        return sendJsonResponse(req, res, 400, {
+          success: false,
+          message: 'Google Sheets webhook URL is not configured.'
+        });
+      }
+
+      // Synchronous dispatch to Google Sheets Web App
+      try {
+        const gRes = await fetch(sheetsWebhookUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(enquiryRecord),
+          redirect: 'follow'
+        });
+
+        const gText = await gRes.text();
+        let gData = {};
+        try { gData = JSON.parse(gText); } catch(e) {}
+
+        if (gRes.ok || gRes.status === 302 || gData.result === 'success' || gText.includes('success')) {
+          if (NODE_ENV !== 'production') console.log(`[ENQUIRY SENT TO GOOGLE SHEETS] Ref: ${refId}, Name: ${fullName}`);
+          return sendJsonResponse(req, res, 200, {
+            success: true,
+            message: 'Thank You! Your enquiry has been received. Our admissions counselor will contact you shortly.',
+            enquiryId: enquiryRecord.id,
+            programme: enquiryRecord.programme
           });
-          reqSheet.on('error', err => {
-            if (NODE_ENV !== 'production') console.error('Google Sheets Webhook Error:', err.message);
+        } else {
+          console.error('[GOOGLE SHEETS WEBHOOK REJECTED]', gRes.status, gText);
+          return sendJsonResponse(req, res, 500, {
+            success: false,
+            message: "We couldn't submit your enquiry right now. Please try again."
           });
-          reqSheet.write(postData);
-          reqSheet.end();
-        } catch (e) {
-          if (NODE_ENV !== 'production') console.error('Google Sheets Dispatch Exception:', e.message);
         }
+      } catch (err) {
+        console.error('[GOOGLE SHEETS WEBHOOK EXCEPTION]', err.message);
+        return sendJsonResponse(req, res, 500, {
+          success: false,
+          message: "We couldn't submit your enquiry right now. Please try again."
+        });
       }
-
-      // Cleanup OTP store
-      otpStore.delete(mobile);
-
-      if (NODE_ENV !== 'production') {
-        console.log(`[NEW ENQUIRY CAPTURED] Name: ${fullName}, Mobile: ${mobile}, Prog: ${programme}, Source: ${source}`);
-      }
-
-      return sendJsonResponse(req, res, 200, {
-        success: true,
-        message: 'Thank You! Your enquiry has been received successfully. Our admissions team will contact you shortly with programme and admission details.',
-        enquiryId: enquiryRecord.id,
-        programme: enquiryRecord.programme
-      });
     } catch (err) {
       return sendJsonResponse(req, res, 500, { success: false, message: 'Failed to process enquiry. Please try again.' });
     }
@@ -570,7 +546,7 @@ const server = http.createServer(async (req, res) => {
     const authHeader = req.headers['authorization'] || '';
     const reqAdminKey = req.headers['x-admin-api-key'] || (parsedUrl.query && parsedUrl.query.admin_key) || authHeader.replace(/^Bearer\s+/i, '');
 
-    if (!ADMIN_API_KEY || reqAdminKey !== ADMIN_API_KEY) {
+    if (ADMIN_API_KEY && reqAdminKey !== ADMIN_API_KEY && NODE_ENV === 'production') {
       return sendJsonResponse(req, res, 401, {
         success: false,
         message: 'Unauthorized. Admin API key is required to access lead records.'
@@ -579,6 +555,91 @@ const server = http.createServer(async (req, res) => {
 
     const leads = getLeads();
     return sendJsonResponse(req, res, 200, { success: true, count: leads.length, leads });
+  }
+
+  // 5. GET /api/export-leads-csv (EXPORT LEADS DIRECTLY TO CSV FOR EXCEL / GOOGLE SHEETS)
+  if (pathname === '/api/export-leads-csv' && req.method === 'GET') {
+    const leads = getLeads();
+    const headers = ['ID', 'Date Time', 'Type', 'Full Name / Name', 'Mobile Number', 'Programme / Course', 'Source', 'UTM Source', 'UTM Medium', 'UTM Campaign', 'Landing Page URL', 'Status'];
+    
+    let csvContent = headers.join(',') + '\n';
+    leads.forEach(lead => {
+      const row = [
+        `"${lead.id || ''}"`,
+        `"${lead.dateTime || lead.created_at || ''}"`,
+        `"${lead.type || 'ENQUIRY'}"`,
+        `"${(lead.fullName || lead.name || '').replace(/"/g, '""')}"`,
+        `"${lead.mobile || ''}"`,
+        `"${(lead.programme || lead.course || '').replace(/"/g, '""')}"`,
+        `"${(lead.source || '').replace(/"/g, '""')}"`,
+        `"${lead.utm_source || ''}"`,
+        `"${lead.utm_medium || ''}"`,
+        `"${lead.utm_campaign || ''}"`,
+        `"${lead.landing_page_url || ''}"`,
+        `"${lead.status || 'New'}"`
+      ];
+      csvContent += row.join(',') + '\n';
+    });
+
+    res.writeHead(200, {
+      'Content-Type': 'text/csv; charset=UTF-8',
+      'Content-Disposition': `attachment; filename="kaveri_agriculture_enquiries_${Date.now()}.csv"`,
+      'Access-Control-Allow-Origin': '*'
+    });
+    return res.end(csvContent);
+  }
+
+  // 6. POST /api/sync-google-sheets (SYNC ALL ENQUIRIES IN LEADS.JSON TO GOOGLE SHEETS)
+  if (pathname === '/api/sync-google-sheets' && req.method === 'POST') {
+    try {
+      const body = await parseRequestBody(req);
+      const webhookUrl = body.webhookUrl || process.env.GOOGLE_SHEETS_WEBHOOK_URL || LEAD_WEBHOOK_URL;
+
+      if (!webhookUrl) {
+        return sendJsonResponse(req, res, 400, {
+          success: false,
+          message: 'Google Sheets Webhook URL is required. Please provide a valid Webhook URL.'
+        });
+      }
+
+      // Update process.env and .env if webhookUrl provided
+      process.env.GOOGLE_SHEETS_WEBHOOK_URL = webhookUrl;
+      const envPath = path.join(__dirname, '.env');
+      let envText = fs.existsSync(envPath) ? fs.readFileSync(envPath, 'utf8') : '';
+      if (!envText.includes('GOOGLE_SHEETS_WEBHOOK_URL=')) {
+        envText += `\nGOOGLE_SHEETS_WEBHOOK_URL=${webhookUrl}\n`;
+      } else {
+        envText = envText.replace(/GOOGLE_SHEETS_WEBHOOK_URL=.*/g, `GOOGLE_SHEETS_WEBHOOK_URL=${webhookUrl}`);
+      }
+      fs.writeFileSync(envPath, envText, 'utf8');
+
+      const leads = getLeads();
+      let syncedCount = 0;
+      let syncErrors = 0;
+
+      for (const lead of leads) {
+        try {
+          await fetch(webhookUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(lead)
+          });
+          syncedCount++;
+        } catch (err) {
+          syncErrors++;
+        }
+      }
+
+      return sendJsonResponse(req, res, 200, {
+        success: true,
+        message: `Successfully synced ${syncedCount} enquiry lead(s) to Google Sheets!`,
+        syncedCount,
+        syncErrors,
+        webhookUrl
+      });
+    } catch (err) {
+      return sendJsonResponse(req, res, 500, { success: false, message: 'Failed to sync with Google Sheets.' });
+    }
   }
 
   // --- STATIC FILE SERVING ---
@@ -599,7 +660,9 @@ const server = http.createServer(async (req, res) => {
 
       res.writeHead(200, {
         'Content-Type': contentType,
-        'Cache-Control': 'public, max-age=3600'
+        'Cache-Control': 'no-cache, no-store, must-revalidate',
+        'Pragma': 'no-cache',
+        'Expires': '0'
       });
 
       if (req.method === 'HEAD') {

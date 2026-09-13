@@ -1482,105 +1482,43 @@
       </marquee>
     </div>
 
-    <section class="py-5 hero-bg" style="background: url(/wp-content/themes/kaveriuniversity/assets/img/agri-hero-bg.jpg) center center no-repeat; background-size: cover; min-height: 80vh;">
+    <section class="py-5 hero-bg d-flex align-items-center" style="background: url(/wp-content/themes/kaveriuniversity/assets/img/agri-hero-bg.jpg) center center no-repeat; background-size: cover; min-height: 80vh;">
       <div class="container">
         <div class="row justify-content-center">
-          <div class="col-lg-6 col-md-8">
-            <div class="card shadow-sm border-0 rounded-0 overflow-hidden" style="font-family: 'Figtree', sans-serif;">
-              <div
-                class="card-header text-white text-center py-4"
-                style="background-color: #22325c; border-bottom: 3px solid #b72928;"
-              >
-                <h1 class="h3 mb-1 text-white fw-bold text-uppercase" style="font-family: 'Lato', sans-serif; letter-spacing: 0.5px;">SCHOOL OF AGRICULTURE</h1>
-                <h2 class="h6 mb-2 text-warning fw-bold text-uppercase" style="font-family: 'Figtree', sans-serif;">Admissions Enquiry – 2026–27</h2>
-                <p class="mb-0 text-white-50 small" style="font-size: 0.85rem;">Interested in our Agriculture programmes? Get admission details and guidance from Kaveri University.</p>
-              </div>
-              <div class="card-body p-4 bg-white">
-                <ul
-                  class="nav nav-pills nav-justified mb-4"
-                  id="authTabs"
-                  role="tablist"
-                >
-                  <li class="nav-item" role="presentation">
-                    <button
-                      class="nav-link active fw-bold py-2 rounded-0 text-uppercase"
-                      id="apply-tab"
-                      data-bs-toggle="tab"
-                      data-bs-target="#apply-pane"
-                      type="button"
-                      role="tab"
-                      style="font-size: 0.85rem;"
-                    >
-                      <i class="fa-solid fa-file-signature me-1"></i> Admissions Enquiry
-                    </button>
-                  </li>
-                  <li class="nav-item" role="presentation">
-                    <button
-                      class="nav-link fw-bold py-2"
-                      id="login-tab"
-                      data-bs-toggle="tab"
-                      data-bs-target="#login-pane"
-                      type="button"
-                      role="tab"
-                    >
-                      <i class="fa-solid fa-right-to-bracket me-1"></i> Already Registered? Login
-                    </button>
-                  </li>
-                </ul>
-
-                <div class="tab-content" id="authTabsContent">
-                  <!-- Admissions Enquiry Pane -->
-                  <div
-                    class="tab-pane fade show active"
-                    id="apply-pane"
-                    role="tabpanel"
-                  >
-                    <div id="apply-page-enquiry-widget"></div>
-                  </div>
-
-                  <!-- Existing Login Form Pane -->
-                  <div class="tab-pane fade" id="login-pane" role="tabpanel">
-                    <div id="login-alert" class="alert d-none"></div>
-                    <form id="login-form">
-                      <div class="mb-3">
-                        <label class="form-label fw-semibold">Registered Mobile Number</label>
-                        <input
-                          type="tel"
-                          class="form-control"
-                          id="login-mobile"
-                          placeholder="10-digit mobile number"
-                          required
-                        />
-                      </div>
-                      <div class="mb-3">
-                        <label class="form-label fw-semibold">Password</label>
-                        <input
-                          type="password"
-                          class="form-control"
-                          id="login-password"
-                          placeholder="Your password"
-                          required
-                        />
-                      </div>
-                      <button
-                        type="submit"
-                        class="btn text-white w-100 fw-bold py-2"
-                        style="background-color: #22325c; border: none;"
-                      >
-                        Login to Application Portal
-                      </button>
-                    </form>
-                    <div
-                      id="login-success-dashboard"
-                      class="d-none text-center py-4"
-                    >
-                      <h4 class="text-success fw-bold">
-                        <i class="fa-solid fa-circle-check"></i> Successful Login!
-                      </h4>
-                      <p>Welcome back to Kaveri University Student Portal.</p>
-                      <a href="/b-sc-hons-agriculture/" class="btn btn-outline-primary btn-sm">Explore Agriculture Programmes</a>
+          <div class="col-lg-5 col-md-7 col-sm-10">
+            <div id="apply-page-enquiry-widget">
+              <div class="card border rounded-0 text-start" style="font-family: 'Figtree', sans-serif; border-color: #cbd5e1 !important; box-shadow: 0 4px 16px rgba(0,0,0,0.1);">
+                <div class="card-header text-white text-center py-3 px-4" style="background-color: #22325c; border-bottom: 3px solid #b72928;">
+                  <h2 class="h4 mb-1 text-white fw-bold text-uppercase" style="font-family: 'Lato', sans-serif; letter-spacing: 0.5px; font-size: 1.25rem;">SCHOOL OF AGRICULTURE</h2>
+                  <h3 class="h6 mb-2 text-uppercase fw-bold" style="font-family: 'Figtree', sans-serif; color: #fcd000 !important; font-size: 0.875rem; letter-spacing: 0.5px;">Admissions Enquiry – 2026–27</h3>
+                  <p class="mb-0 text-white-50" style="font-size: 0.8rem; line-height: 1.35;">Interested in our Agriculture programmes? Get admission details and guidance from Kaveri University.</p>
+                </div>
+                <div class="card-body p-4 bg-white">
+                  <div id="apply-page-enquiry-widget-alert" class="alert d-none py-2 px-3 mb-3 small" style="font-size: 0.85rem;"></div>
+                  <form id="apply-page-enquiry-widget-form-step1" class="enquiry-step">
+                    <div class="mb-3">
+                      <label class="form-label fw-bold text-uppercase mb-1" style="font-size: 0.775rem; color: #22325c; letter-spacing: 0.5px;">FULL NAME <span class="text-danger">*</span></label>
+                      <input type="text" id="apply-page-enquiry-widget-fullname" class="form-control rounded-0" placeholder="Enter your full name" style="font-size: 0.875rem; height: 40px; border-color: #ced4da;" required />
                     </div>
-                  </div>
+                    <div class="mb-3">
+                      <label class="form-label fw-bold text-uppercase mb-1" style="font-size: 0.775rem; color: #22325c; letter-spacing: 0.5px;">MOBILE NUMBER <span class="text-danger">*</span></label>
+                      <div class="input-group">
+                        <span class="input-group-text bg-light text-dark fw-bold rounded-0" style="font-size: 0.875rem; height: 40px; border-color: #ced4da;">+91</span>
+                        <input type="tel" id="apply-page-enquiry-widget-mobile" class="form-control rounded-0" placeholder="Enter 10-digit mobile number" maxlength="10" pattern="[0-9]{10}" style="font-size: 0.875rem; height: 40px; border-color: #ced4da;" required />
+                      </div>
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label fw-bold text-uppercase mb-1" style="font-size: 0.775rem; color: #22325c; letter-spacing: 0.5px;">INTERESTED PROGRAMME <span class="text-danger">*</span></label>
+                      <select id="apply-page-enquiry-widget-prog" class="form-select rounded-0" style="font-size: 0.875rem; height: 40px; border-color: #ced4da;" required>
+                        <option value="B.Sc. (Hons.) Agriculture">B.Sc. (Hons.) Agriculture</option>
+                        <option value="B.Sc. (Hons.) AgriTech">B.Sc. (Hons.) AgriTech</option>
+                        <option value="B.Sc. (Hons.) Horticulture">B.Sc. (Hons.) Horticulture</option>
+                      </select>
+                    </div>
+                    <button type="submit" id="apply-page-enquiry-widget-btn-submit" class="btn text-white w-100 fw-bold rounded-0 text-uppercase mt-2" style="background-color: #b72928; border: 1px solid #b72928; font-size: 0.875rem; height: 42px; letter-spacing: 0.5px;">
+                      <i class="fa-solid fa-paper-plane me-2"></i> ENQUIRE NOW
+                    </button>
+                  </form>
                 </div>
               </div>
             </div>
@@ -1598,248 +1536,6 @@
         if (window.KaveriEnquiry) {
           window.KaveriEnquiry.init("apply-page-enquiry-widget");
         }
-        var verifiedMobile = "";
-        var resendTimer = null;
-        var secondsLeft = 60;
-
-        var applyAlert = document.getElementById("apply-alert");
-        var applyMobileInput = document.getElementById("apply-mobile");
-        var applyOtpInput = document.getElementById("apply-otp");
-        var applyCourseSelect = document.getElementById("apply-course");
-
-        var stepMobile = document.getElementById("step-mobile");
-        var stepOtp = document.getElementById("step-otp");
-        var stepForm = document.getElementById("step-form");
-        var stepSuccess = document.getElementById("step-success");
-
-        var btnSendOtp = document.getElementById("btn-send-otp");
-        var btnVerifyOtp = document.getElementById("btn-verify-otp");
-        var btnResendOtp = document.getElementById("btn-resend-otp");
-        var btnEditMobile = document.getElementById("btn-edit-mobile");
-
-        function showAlert(msg, type) {
-          applyAlert.className = "alert alert-" + (type || "danger");
-          applyAlert.innerText = msg;
-          applyAlert.classList.remove("d-none");
-        }
-
-        function hideAlert() {
-          applyAlert.classList.add("d-none");
-        }
-
-        // Auto-select course from URL or attribution tracker
-        var preselectedCourse = window.KaveriTracker ? window.KaveriTracker.getPreselectedCourse() : "";
-        if (preselectedCourse) {
-          for (var i = 0; i < applyCourseSelect.options.length; i++) {
-            if (applyCourseSelect.options[i].value.toLowerCase() === preselectedCourse.toLowerCase()) {
-              applyCourseSelect.selectedIndex = i;
-              break;
-            }
-          }
-        }
-
-        function startTimer() {
-          clearInterval(resendTimer);
-          secondsLeft = 60;
-          document.getElementById("timer-count").innerText = secondsLeft;
-          document.getElementById("timer-text").classList.remove("d-none");
-          btnResendOtp.classList.add("d-none");
-
-          resendTimer = setInterval(function () {
-            secondsLeft--;
-            document.getElementById("timer-count").innerText = secondsLeft;
-            if (secondsLeft <= 0) {
-              clearInterval(resendTimer);
-              document.getElementById("timer-text").classList.add("d-none");
-              btnResendOtp.classList.remove("d-none");
-            }
-          }, 1000);
-        }
-
-        // Send OTP
-        btnSendOtp.addEventListener("click", function () {
-          hideAlert();
-          var mobile = applyMobileInput.value.trim().replace(/\D/g, "");
-          if (mobile.length !== 10 || !/^[6-9]\d{9}$/.test(mobile)) {
-            showAlert("Please enter a valid 10-digit Indian mobile number.");
-            return;
-          }
-
-          btnSendOtp.disabled = true;
-          btnSendOtp.innerHTML = '<i class="fa-solid fa-spinner fa-spin me-2"></i> Sending OTP...';
-
-          fetch("/api/send-otp", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ mobile: mobile })
-          })
-          .then(res => res.json())
-          .then(data => {
-            btnSendOtp.disabled = false;
-            btnSendOtp.innerHTML = '<i class="fa-solid fa-paper-plane me-2"></i> Send OTP to Continue';
-
-            if (data.success) {
-              verifiedMobile = mobile;
-              document.getElementById("disp-mobile").innerText = "+91 " + mobile;
-              stepMobile.classList.add("d-none");
-              stepOtp.classList.remove("d-none");
-              startTimer();
-              if (data.debugOtp) {
-                showAlert("OTP sent! (Dev Mode Code: " + data.debugOtp + ")", "info");
-              } else {
-                showAlert("OTP sent successfully to +91 " + mobile, "success");
-              }
-            } else {
-              showAlert(data.message || "Failed to send OTP.");
-            }
-          })
-          .catch(err => {
-            btnSendOtp.disabled = false;
-            btnSendOtp.innerHTML = '<i class="fa-solid fa-paper-plane me-2"></i> Send OTP to Continue';
-            showAlert("Network error. Please try again.");
-          });
-        });
-
-        // Edit Mobile
-        btnEditMobile.addEventListener("click", function () {
-          hideAlert();
-          clearInterval(resendTimer);
-          stepOtp.classList.add("d-none");
-          stepMobile.classList.remove("d-none");
-        });
-
-        // Resend OTP
-        btnResendOtp.addEventListener("click", function () {
-          btnSendOtp.click();
-        });
-
-        // Verify OTP
-        btnVerifyOtp.addEventListener("click", function () {
-          hideAlert();
-          var otp = applyOtpInput.value.trim();
-          if (!otp || otp.length < 4) {
-            showAlert("Please enter the complete OTP code.");
-            return;
-          }
-
-          btnVerifyOtp.disabled = true;
-          btnVerifyOtp.innerHTML = '<i class="fa-solid fa-spinner fa-spin me-2"></i> Verifying...';
-
-          fetch("/api/verify-otp", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ mobile: verifiedMobile, otp: otp })
-          })
-          .then(res => res.json())
-          .then(data => {
-            btnVerifyOtp.disabled = false;
-            btnVerifyOtp.innerHTML = '<i class="fa-solid fa-shield-check me-2"></i> Verify OTP & Proceed';
-
-            if (data.success) {
-              clearInterval(resendTimer);
-              document.getElementById("form-verified-mobile").innerText = "+91 " + verifiedMobile;
-              stepOtp.classList.add("d-none");
-              stepForm.classList.remove("d-none");
-              hideAlert();
-            } else {
-              showAlert(data.message || "Invalid OTP code.");
-            }
-          })
-          .catch(err => {
-            btnVerifyOtp.disabled = false;
-            btnVerifyOtp.innerHTML = '<i class="fa-solid fa-shield-check me-2"></i> Verify OTP & Proceed';
-            showAlert("Verification error. Please try again.");
-          });
-        });
-
-        // Submit Application
-        document.getElementById("agri-app-form").addEventListener("submit", function (e) {
-          e.preventDefault();
-          hideAlert();
-
-          var name = document.getElementById("apply-name").value.trim();
-          var email = document.getElementById("apply-email").value.trim();
-          var course = applyCourseSelect.value;
-          var state = document.getElementById("apply-state").value.trim();
-          var city = document.getElementById("apply-city").value.trim();
-
-          if (!name || !email || !course) {
-            showAlert("Please fill in all required fields.");
-            return;
-          }
-
-          var attribution = window.KaveriTracker ? window.KaveriTracker.getAttribution() : {};
-
-          var payload = {
-            name: name,
-            mobile: verifiedMobile,
-            email: email,
-            course: course,
-            state: state,
-            city: city,
-            source: attribution.source || "Website Direct",
-            utm_source: attribution.utm_source || "",
-            utm_medium: attribution.utm_medium || "",
-            utm_campaign: attribution.utm_campaign || "",
-            landing_page_url: attribution.landing_page_url || window.location.href
-          };
-
-          var btnSubmit = document.getElementById("btn-submit-app");
-          btnSubmit.disabled = true;
-          btnSubmit.innerHTML = '<i class="fa-solid fa-spinner fa-spin me-2"></i> Submitting Application...';
-
-          fetch("/api/submit-application", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(payload)
-          })
-          .then(res => res.json())
-          .then(data => {
-            btnSubmit.disabled = false;
-            btnSubmit.innerHTML = '<i class="fa-solid fa-paper-plane me-2"></i> Submit Application';
-
-            if (data.success) {
-              stepForm.classList.add("d-none");
-              stepSuccess.classList.remove("d-none");
-              document.getElementById("succ-id").innerText = data.leadId;
-              document.getElementById("succ-course").innerText = data.course;
-              document.getElementById("succ-mobile").innerText = "+91 " + verifiedMobile;
-            } else {
-              showAlert(data.message || "Failed to submit application.");
-            }
-          })
-          .catch(err => {
-            btnSubmit.disabled = false;
-            btnSubmit.innerHTML = '<i class="fa-solid fa-paper-plane me-2"></i> Submit Application';
-            showAlert("Submission error. Please try again.");
-          });
-        });
-
-        // Handle existing Login form
-        const loginForm = document.getElementById("login-form");
-        const loginAlert = document.getElementById("login-alert");
-
-        loginForm.addEventListener("submit", function (e) {
-          e.preventDefault();
-          const mobile = document.getElementById("login-mobile").value.trim();
-          const password = document.getElementById("login-password").value;
-
-          const savedMobile = localStorage.getItem("ku_user_mobile");
-          const savedPassword = localStorage.getItem("ku_user_password");
-
-          if (
-            (mobile === savedMobile && password === savedPassword && mobile !== "") ||
-            (mobile.length === 10 && password.length >= 4) // Graceful fallback
-          ) {
-            loginForm.classList.add("d-none");
-            loginAlert.classList.add("d-none");
-            document.getElementById("login-success-dashboard").classList.remove("d-none");
-          } else {
-            loginAlert.className = "alert alert-danger";
-            loginAlert.innerText = "Invalid mobile number or password.";
-            loginAlert.classList.remove("d-none");
-          }
-        });
       });
     </script>
     <footer class="info py-3 bg-brand-blue-dark">

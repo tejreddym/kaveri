@@ -38,6 +38,7 @@ if (target.hasAttribute('data-bs-target')) {
 });
 // ON READY
 $(document).ready(function() {
+  heroSlider('.hero-slider');
   infoSlickFiveSlide('.info-presence-slider', 5, true, null);
   infoSlickThreeSlide('.info-academics-slider', 3, true, '.arrows-academics-slider');
   infoSlickThreeSlide('.info-advantage-slider', 3, true, '.arrows-advantage-slider');
@@ -290,6 +291,7 @@ function infoSlickFiveSlide($slideSelctor, $slides, $arrows, $appendArrows){
 }
 
 function heroSlider($slideSelctor){
+  if ($($slideSelctor).hasClass('slick-initialized')) return;
   $($slideSelctor).slick({
     infinite: true,
     slidesToShow: 1,
